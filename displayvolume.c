@@ -1,4 +1,3 @@
-#include "symbols/mute.xpm"
 #include "displayvolume.h"
 
 cFlatDisplayVolume::cFlatDisplayVolume(void) {

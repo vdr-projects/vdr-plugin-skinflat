@@ -1,6 +1,3 @@
-#include "symbols/audio.xpm"
-#include "symbols/dolbydigital.xpm"
-
 #include "displaychannel.h"
 
 cFlatDisplayChannel::cFlatDisplayChannel(bool WithInfo) {

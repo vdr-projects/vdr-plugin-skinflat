@@ -1,8 +1,5 @@
 #include "displaymenu.h"
 
-#include "symbols/arrowdown.xpm"
-#include "symbols/arrowup.xpm"
-
 cFlatDisplayMenu::cFlatDisplayMenu(void) {
     CreateFullOsd();
     TopBarCreate();
