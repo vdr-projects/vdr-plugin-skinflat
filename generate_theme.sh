@@ -1,0 +1,141 @@
+#!/bin/bash
+
+echo "*********************************"
+echo "* theme generator version 0.1   *"
+echo "* for skinflat version <= 0.0.1 *"
+echo "*********************************"
+
+echo ""
+echo "all colors must be of the form AARRGGBB"
+echo ""
+
+echo "simple mode: "
+echo "  you only need 4 colors"
+echo "    + Backround "
+echo "    + Foreground (Font, Scrollbar, Progressbar) "
+echo "    + Current (current menu item background) "
+echo "    + Selable (selable menu item background) "
+echo ""
+echo "normale mode: "
+echo "   you need 10 colors"
+
+while [ 1 ]
+do
+    echo ""
+    echo -n "which mode you want s (simple) / n (normal): "
+    read Mode
+
+    if [ "$Mode" != "s" ] && [ "$Mode" != "n" ]
+    then
+        echo "wrong answer, just type \"s\" or \"n\"!"
+    else
+        break
+    fi
+done
+
+if [ "$Mode" == "s" ]
+then
+    echo -n "Name: "
+    read ThemeName
+    echo -n "Background color: "
+    read Background
+    echo -n "Foreground color: "
+    read Foreground
+    echo -n "Menu item current background color: "
+    read ItemCurBG
+    echo -n "Menu item selectable background color: "
+    read ItemSelableBG
+    
+    Font=$Foreground
+    TitleFont=$Foreground
+    ProgressBG=$Foreground
+    ProgressFG=$Foreground
+    ScrollbarBG=$Foreground
+    ScrollbarFG=$Foreground
+    ItemBG=$Background
+
+else
+    echo -n "Name: "
+    read ThemeName
+    echo -n "Background color: "
+    read Background
+    echo -n "Font color: "
+    read Font
+    echo -n "Title font color: "
+    read TitleFont
+    echo -n "Menu item (not selectable) background color: "
+    read ItemBG
+    echo -n "Menu item current/selected background color: "
+    read ItemCurBG
+    echo -n "Menu item selectable background color: "
+    read ItemSelableBG
+    echo -n "Progressbar background color: "
+    read ProgressBG
+    echo -n "Progressbar foreground color: "
+    read ProgressFG
+    echo -n "Scrollbar background color: "
+    read ScrollbarBG
+    echo -n "Scrollbar foreground color: "
+    read ScrollbarFG
+fi
+
+FILE=flat-${ThemeName}.theme
+
+echo "Description = $ThemeName" > $FILE
+echo "clrTopBarBg = $Background" >> $FILE
+echo "clrTopBarFont = $Font" >> $FILE
+echo "clrTopBarDateTimeFont = $Font" >> $FILE
+echo "clrButtonBg = $Background" >> $FILE
+echo "clrButtonFont = $Font" >> $FILE
+echo "clrButtonRed = 99BB0000" >> $FILE
+echo "clrButtonGreen = 9900BB00" >> $FILE
+echo "clrButtonYellow = 99BBBB00" >> $FILE
+echo "clrButtonBlue = 990000BB" >> $FILE
+echo "clrMessageBg = $Background" >> $FILE
+echo "clrMessageFont = $Font" >> $FILE
+echo "clrMessageStatus = 900000FF" >> $FILE
+echo "clrMessageInfo = 90009900" >> $FILE
+echo "clrMessageWarning = 90BBBB00" >> $FILE
+echo "clrMessageError = 90BB0000" >> $FILE
+echo "clrChannelBg = $Background" >> $FILE
+echo "clrChannelFontTitle = $TitleFont" >> $FILE
+echo "clrChannelFontEpg = $Font" >> $FILE
+echo "clrChannelProgressFg = $ProgressFG" >> $FILE
+echo "clrChannelProgressBg = $ProgressBG" >> $FILE
+echo "clrItemBg = $ItemBG" >> $FILE
+echo "clrItemFont = $Font" >> $FILE
+echo "clrItemCurrentBg = $ItemCurBG" >> $FILE
+echo "clrItemCurrentFont = $Font" >> $FILE
+echo "clrItemSelableBg = $ItemSelableBG" >> $FILE
+echo "clrItemSelableFont = $Font" >> $FILE
+echo "clrScrollbarFg = $ScrollbarFG" >> $FILE
+echo "clrScrollbarBg = $ScrollbarBG" >> $FILE
+echo "clrMenuEventBg = $Background" >> $FILE
+echo "clrMenuEventFontTitle = $TitleFont" >> $FILE
+echo "clrMenuEventFontInfo = $Font" >> $FILE
+echo "clrMenuRecBg = $Background" >> $FILE
+echo "clrMenuRecFontTitle = $TitleFont" >> $FILE
+echo "clrMenuRecFontInfo = $Font" >> $FILE
+echo "clrMenuTextBg = $Background" >> $FILE
+echo "clrMenuTextFont = $Font" >> $FILE
+echo "clrReplayBg = $Background" >> $FILE
+echo "clrReplayFont = $Font" >> $FILE
+echo "clrReplayProgressFg = $ProgressFG" >> $FILE
+echo "clrReplayProgressBg = $ProgressBG" >> $FILE
+echo "clrTrackItemBg = $ItemBG" >> $FILE
+echo "clrTrackItemFont = $Font" >> $FILE
+echo "clrTrackItemCurrentBg = $ItemCurBG" >> $FILE
+echo "clrTrackItemCurrentFont = $Font" >> $FILE
+echo "clrVolumeBg = $Background" >> $FILE
+echo "clrVolumeFont = $Font" >> $FILE
+echo "clrVolumeProgressFg = $ProgressFG" >> $FILE
+echo "clrVolumeProgressBg = $ProgressBG" >> $FILE
+
+echo ""
+echo "Theme <${FILE}> saved"
+echo "Feel free to adjust single colors in the file"
+echo "you must manually move it to your vdr config to test it"
+echo "for example: mv ${FILE} /etc/vdr/themes/"
+echo ""
+echo "Remember, You must provide icons for your theme"
+echo "look at <vdrconfig>/plugins/skinflat/icons/default/"

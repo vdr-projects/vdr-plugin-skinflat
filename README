@@ -1,0 +1,47 @@
+This is a "plugin" for the Video Disk Recorder (VDR).
+
+Written by:                  Martin Schirrmacher <vdr.skinflat@schirrmacher.eu>
+Based on:                    skin-nOpacity from Louis Braun
+                             http://projects.vdr-developer.org/projects/skin-nopacity/
+
+Project's homepage:          http://projects.vdr-developer.org/projects/plg-skinflat/
+
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+See the file COPYING for more information.
+
+Requirements
+------------
+
+- VDR version >= 1.7.34
+
+- Installed ImageMagick for displaying png/jpg Icons, Channel Logos and EPG Images
+
+Description
+-----------
+skinflat ist ein einfacher und schlanker Skin für VDR.
+
+Installation 
+------------
+Installation wie bei allen VDR Plugins.
+    make
+    make install
+
+Für die Kanallogos empfehle ich die Logos von 3PO Repo (https://github.com/3PO/Senderlogos).
+Diese können mit folgendem Befehl heruntergeladen werden:
+    git clone https://github.com/3PO/Senderlogos.git logos
+Die Logos müssen im folgenden Ordner zur Verfügung gestellt werden:
+    <vdrconfigdir>/plugins/skinflat/logos/
+
+Der Skin muss im Menü unter Einstellungen -> OSD ausgewählt werden.
+
+
+Themes and theme specific Icons
+-------------------------------
+Der Skin ist weitestgehend über Themes anpassbar.
+Für die einfache Erstellung eines Themes existiert im Quellcode-Verzeichnis folgendes script:
+    generate_theme.sh
+Damit kann einfach ein neues Theme erstellt werden.
