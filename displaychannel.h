@@ -13,6 +13,7 @@ class cFlatDisplayChannel : public cFlatBaseRender, public cSkinDisplayChannel {
         cPixmap *chanInfoBottomPixmap;
 
         int heightBottom;
+        int progressBarHeight;
 
         void DrawProgressBar(int Current, int Total);
     public:

@@ -12,18 +12,18 @@ cFlatDisplayChannel::cFlatDisplayChannel(bool WithInfo) {
 
     // von unten noch oben
     // 2 * EPG + 2 * EPGsml
-    int heightProgress = 8;
-    heightBottom = (fontHeight * 2) + (fontSmlHeight * 2) + heightProgress; // Top, Buttom, Between
+    progressBarHeight = 20;
+    heightBottom = (fontHeight * 2) + (fontSmlHeight * 2) + progressBarHeight; // Top, Buttom, Between
     int heightTop = fontHeight;
 
     int height = heightBottom;
     chanInfoBottomPixmap = osd->CreatePixmap(1, cRect(0, osdHeight - height, osdWidth, heightBottom));
 
-    height += heightProgress;
-    chanInfoProgressPixmap = osd->CreatePixmap(2, cRect(0, osdHeight - height, osdWidth, heightProgress));
-    chanInfoProgressPixmap->Fill( clrTransparent );
+    height += progressBarHeight;
+    chanInfoProgressPixmap = osd->CreatePixmap(2, cRect(0, osdHeight - height, osdWidth, progressBarHeight));
+    chanInfoProgressPixmap->Fill( Theme.Color(clrChannelBg) );
 
-    height += heightTop + 2;
+    height += heightTop;
     chanInfoTopPixmap = osd->CreatePixmap(1, cRect(0, osdHeight - height, osdWidth, heightTop));
 }
 
@@ -155,14 +155,15 @@ void cFlatDisplayChannel::SetEvents(const cEvent *Present, const cEvent *Followi
 }
 
 void cFlatDisplayChannel::DrawProgressBar(int Current, int Total) {
+    int top = progressBarHeight / 2 - 3;
     int barFullWidth = chanInfoProgressPixmap->ViewPort().Width();
     double percentLeft = ((double)Current) / (double)Total;
 
-    chanInfoProgressPixmap->Fill( clrTransparent );
+    chanInfoProgressPixmap->Fill( Theme.Color(clrChannelBg) );
 
     if (Current > 0) {
-        chanInfoProgressPixmap->DrawRectangle(cRect( 0, 2, barFullWidth, 2), Theme.Color(clrChannelProgressBg));
-        chanInfoProgressPixmap->DrawRectangle(cRect( 0, 0, (barFullWidth * percentLeft), 6), Theme.Color(clrChannelProgressFg));
+        chanInfoProgressPixmap->DrawRectangle(cRect( 0, top + 2, barFullWidth, 2), Theme.Color(clrChannelProgressBg));
+        chanInfoProgressPixmap->DrawRectangle(cRect( 0, top, (barFullWidth * percentLeft), 6), Theme.Color(clrChannelProgressFg));
     }
 }
 

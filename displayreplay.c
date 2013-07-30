@@ -10,7 +10,7 @@ cFlatDisplayReplay::cFlatDisplayReplay(bool ModeOnly) {
     MessageCreate();
 
     labelPixmap = osd->CreatePixmap(1, cRect(0, osdHeight - labelHeight, osdWidth, labelHeight));
-    progressBarPixmap = osd->CreatePixmap(1, cRect(0, osdHeight - labelHeight - progressBarHeight - marginItem, osdWidth, progressBarHeight));
+    progressBarPixmap = osd->CreatePixmap(1, cRect(0, osdHeight - labelHeight - progressBarHeight, osdWidth, progressBarHeight));
 
     labelPixmap->Fill(Theme.Color(clrReplayBg));
     progressBarPixmap->Fill(clrTransparent);
@@ -94,7 +94,7 @@ void cFlatDisplayReplay::DrawProgressBar(int Current, int Total) {
     int barFullWidth = progressBarPixmap->ViewPort().Width();
     double percentLeft = ((double)Current) / (double)Total;
 
-    progressBarPixmap->Fill( clrTransparent );
+    progressBarPixmap->Fill( Theme.Color(clrReplayBg) );
 
     if (Current > 0) {
         progressBarPixmap->DrawRectangle(cRect( 0, top + 2, barFullWidth, 2), Theme.Color(clrReplayProgressBg));

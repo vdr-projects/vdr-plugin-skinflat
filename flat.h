@@ -73,7 +73,7 @@ THEME_CLR(Theme, clrReplayBg,               0x90222222);
 THEME_CLR(Theme, clrReplayFont,             0xFFEEEEEE);
 THEME_CLR(Theme, clrReplayProgressFg,       0xFFEEEEEE);
 THEME_CLR(Theme, clrReplayProgressBg,       0xFFEEEEEE);
-THEME_CLR(Theme, clrReplayMarkFg,           0xFF222222);
+THEME_CLR(Theme, clrReplayMarkFg,           0xFFEEEEEE);
 THEME_CLR(Theme, clrReplayMarkCurrentFg,    0xFF3090B0);
 
 // Tracks

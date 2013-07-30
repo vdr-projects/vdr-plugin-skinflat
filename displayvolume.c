@@ -36,16 +36,18 @@ void cFlatDisplayVolume::SetVolume(int Current, int Total, bool Mute) {
 }
 
 void cFlatDisplayVolume::DrawProgressBar(int Current, int Total) {
+    int top = progressBarHeight / 2 - 3;
     int barFullWidth = osdWidth * 3 / 4;
     int left = osdWidth - barFullWidth;
     left /= 2;
     double percentLeft = ((double)Current) / (double)Total;
 
-    progressBarPixmap->Fill(clrTransparent);
+    progressBarPixmap->Fill( clrTransparent );
+    progressBarPixmap->DrawRectangle(cRect( left, 0, barFullWidth, progressBarHeight), Theme.Color(clrVolumeBg));
 
     if (Current > 0) {
-        progressBarPixmap->DrawRectangle(cRect( left, 2, barFullWidth, 2), Theme.Color(clrVolumeProgressBg));
-        progressBarPixmap->DrawRectangle(cRect( left, 0, (barFullWidth * percentLeft), 6), Theme.Color(clrVolumeProgressFg));
+        progressBarPixmap->DrawRectangle(cRect( left, top + 2, barFullWidth, 2), Theme.Color(clrVolumeProgressBg));
+        progressBarPixmap->DrawRectangle(cRect( left, top, (barFullWidth * percentLeft), 6), Theme.Color(clrVolumeProgressFg));
     }
 }
 
