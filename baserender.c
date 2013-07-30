@@ -83,7 +83,7 @@ void cFlatBaseRender::TopBarUpdate(void) {
         topBarLastDate = curDate;
 
         topBarPixmap->Fill(Theme.Color(clrTopBarBg));
-        topBarPixmap->DrawText(cPoint(50, 0), topBarTitle, Theme.Color(clrTopBarFont), clrTransparent, font);
+        topBarPixmap->DrawText(cPoint(marginItem, 0), topBarTitle, Theme.Color(clrTopBarFont), clrTransparent, font);
         int width = font->Width(*curDate);
         topBarPixmap->DrawText(cPoint(osdWidth - width, 0), curDate, Theme.Color(clrTopBarDateTimeFont), clrTransparent, font);
     }

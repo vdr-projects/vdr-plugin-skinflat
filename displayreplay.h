@@ -12,6 +12,9 @@ class cFlatDisplayReplay : public cFlatBaseRender, public cSkinDisplayReplay {
         cPixmap *labelPixmap;
 
         void DrawProgressBar(int Current, int Total);
+        void DrawProgressBarMarks(int Current, int Total);
+        void DrawProgressBarMark(int X, bool Start, bool Current);
+        int DrawProgressBarMarkPos(int P, int Total);
         void UpdateInfo(void);
     public:
         cFlatDisplayReplay(bool ModeOnly);
