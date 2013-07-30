@@ -1,24 +1,24 @@
 #include "displayreplay.h"
 
 cFlatDisplayReplay::cFlatDisplayReplay(bool ModeOnly) {
-    progressBarHeight = 20;
     labelHeight = fontHeight;
     current = "";
     total = "";
+
     CreateFullOsd();
     TopBarCreate();
     MessageCreate();
 
     labelPixmap = osd->CreatePixmap(1, cRect(0, osdHeight - labelHeight, osdWidth, labelHeight));
-    progressBarPixmap = osd->CreatePixmap(1, cRect(0, osdHeight - labelHeight - progressBarHeight, osdWidth, progressBarHeight));
+
+    ProgressBarCreate(0, osdHeight - labelHeight - ProgressBarHeight() - marginItem, osdWidth,
+        Theme.Color(clrReplayProgressFg), Theme.Color(clrReplayProgressBarFg), Theme.Color(clrReplayProgressBg));
 
     labelPixmap->Fill(Theme.Color(clrReplayBg));
-    progressBarPixmap->Fill(clrTransparent);
 }
 
 cFlatDisplayReplay::~cFlatDisplayReplay() {
     osd->DestroyPixmap(labelPixmap);
-    osd->DestroyPixmap(progressBarPixmap);
 }
 
 void cFlatDisplayReplay::SetRecording(const cRecording *Recording) {
@@ -89,57 +89,10 @@ void cFlatDisplayReplay::SetMode(bool Play, bool Forward, int Speed) {
     }
 }
 
-void cFlatDisplayReplay::DrawProgressBar(int Current, int Total) {
-    int top = progressBarHeight / 2 - 3;
-    int barFullWidth = progressBarPixmap->ViewPort().Width();
-    double percentLeft = ((double)Current) / (double)Total;
-
-    progressBarPixmap->Fill( Theme.Color(clrReplayBg) );
-
-    if (Current > 0) {
-        progressBarPixmap->DrawRectangle(cRect( 0, top + 2, barFullWidth, 2), Theme.Color(clrReplayProgressBg));
-        progressBarPixmap->DrawRectangle(cRect( 0, top, (barFullWidth * percentLeft), 6), Theme.Color(clrReplayProgressFg));
-    }
-    if( Total > 0 )
-        DrawProgressBarMarks(Current, Total);
-}
-
-void cFlatDisplayReplay::DrawProgressBarMarks(int Current, int Total) {
-    if( marks ) {
-        bool Start = true;
-        for( const cMark *m = marks->First(); m; m = marks->Next(m) ) {
-            int p1 = DrawProgressBarMarkPos( m->Position(), Total );
-            DrawProgressBarMark(p1, Start, m->Position() == Current);
-            Start = !Start;
-        }
-    }
-}
-
-int cFlatDisplayReplay::DrawProgressBarMarkPos(int P, int Total) {
-    return P * progressBarPixmap->ViewPort().Width() / Total;
-}
-
-void cFlatDisplayReplay::DrawProgressBarMark(int X, bool Start, bool Current)
-{
-    if( Start )
-        if( Current )
-            progressBarPixmap->DrawRectangle(cRect( X-5, 0, 10, 3), Theme.Color(clrReplayMarkCurrentFg));
-        else
-            progressBarPixmap->DrawRectangle(cRect( X-3, 0, 6, 3), Theme.Color(clrReplayMarkFg));            
-    else
-        if( Current )
-            progressBarPixmap->DrawRectangle(cRect( X-5, progressBarHeight - 3, 10, 3), Theme.Color(clrReplayMarkCurrentFg));
-        else
-            progressBarPixmap->DrawRectangle(cRect( X-3, progressBarHeight - 3, 6, 3), Theme.Color(clrReplayMarkFg));
-    
-    if( Current )
-        progressBarPixmap->DrawRectangle(cRect( X-1, 0, 2, progressBarHeight), Theme.Color(clrReplayMarkCurrentFg));
-    else
-        progressBarPixmap->DrawRectangle(cRect( X-1, 0, 2, progressBarHeight), Theme.Color(clrReplayMarkFg));
-}
-
 void cFlatDisplayReplay::SetProgress(int Current, int Total) {
-    DrawProgressBar(Current, Total);
+    ProgressBarDraw(Current, Total);
+    if( Total > 0 )
+        ProgressBarDrawMarks(marks, Theme.Color(clrReplayMarkFg), Theme.Color(clrReplayMarkCurrentFg));
 }
 
 void cFlatDisplayReplay::SetCurrent(const char *Current) {

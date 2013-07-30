@@ -12,16 +12,15 @@ cFlatDisplayChannel::cFlatDisplayChannel(bool WithInfo) {
 
     // von unten noch oben
     // 2 * EPG + 2 * EPGsml
-    progressBarHeight = 20;
-    heightBottom = (fontHeight * 2) + (fontSmlHeight * 2) + progressBarHeight; // Top, Buttom, Between
+    heightBottom = (fontHeight * 2) + (fontSmlHeight * 2) + ProgressBarHeight(); // Top, Buttom, Between
     int heightTop = fontHeight;
 
     int height = heightBottom;
     chanInfoBottomPixmap = osd->CreatePixmap(1, cRect(0, osdHeight - height, osdWidth, heightBottom));
 
-    height += progressBarHeight;
-    chanInfoProgressPixmap = osd->CreatePixmap(2, cRect(0, osdHeight - height, osdWidth, progressBarHeight));
-    chanInfoProgressPixmap->Fill( Theme.Color(clrChannelBg) );
+    height += ProgressBarHeight();
+    ProgressBarCreate(0, osdHeight - height, osdWidth,
+        Theme.Color(clrChannelProgressFg), Theme.Color(clrChannelProgressBarFg), Theme.Color(clrChannelProgressBg));
 
     height += heightTop;
     chanInfoTopPixmap = osd->CreatePixmap(1, cRect(0, osdHeight - height, osdWidth, heightTop));
@@ -30,7 +29,6 @@ cFlatDisplayChannel::cFlatDisplayChannel(bool WithInfo) {
 cFlatDisplayChannel::~cFlatDisplayChannel() {
     if (osd) {
         osd->DestroyPixmap(chanInfoTopPixmap);
-        osd->DestroyPixmap(chanInfoProgressPixmap);
         osd->DestroyPixmap(chanInfoBottomPixmap);
     }
 }
@@ -154,19 +152,6 @@ void cFlatDisplayChannel::SetEvents(const cEvent *Present, const cEvent *Followi
     }
 }
 
-void cFlatDisplayChannel::DrawProgressBar(int Current, int Total) {
-    int top = progressBarHeight / 2 - 3;
-    int barFullWidth = chanInfoProgressPixmap->ViewPort().Width();
-    double percentLeft = ((double)Current) / (double)Total;
-
-    chanInfoProgressPixmap->Fill( Theme.Color(clrChannelBg) );
-
-    if (Current > 0) {
-        chanInfoProgressPixmap->DrawRectangle(cRect( 0, top + 2, barFullWidth, 2), Theme.Color(clrChannelProgressBg));
-        chanInfoProgressPixmap->DrawRectangle(cRect( 0, top, (barFullWidth * percentLeft), 6), Theme.Color(clrChannelProgressFg));
-    }
-}
-
 void cFlatDisplayChannel::SetMessage(eMessageType Type, const char *Text) {
     // Wenn es einen Text gibt, diesen Anzeigen ansonsten Message ausblenden
     if( Text )
@@ -183,7 +168,7 @@ void cFlatDisplayChannel::Flush(void) {
         if (t > present->StartTime())
             Current = t - present->StartTime();
         Total = present->Duration();
-        DrawProgressBar(Current, Total);
+        ProgressBarDraw(Current, Total);
     }
     TopBarUpdate();
     osd->Flush();

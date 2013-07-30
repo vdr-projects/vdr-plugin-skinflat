@@ -17,12 +17,15 @@ cFlatBaseRender::cFlatBaseRender(void) {
     marginOsd = 5;
     marginItem = 10;
 
+    progressBarHeight = 20;
+    
     buttonsHeight = 0;
     
     topBarPixmap = NULL;
     buttonsPixmap = NULL;
     messagePixmap = NULL;
     contentPixmap = NULL;
+    progressBarPixmap = NULL;
 }
 
 cFlatBaseRender::~cFlatBaseRender(void) {
@@ -40,6 +43,8 @@ cFlatBaseRender::~cFlatBaseRender(void) {
             osd->DestroyPixmap(messagePixmap);
         if( contentPixmap )
             osd->DestroyPixmap(contentPixmap);
+        if( progressBarPixmap )
+            osd->DestroyPixmap(progressBarPixmap);
 
         delete osd;
     }
@@ -273,4 +278,71 @@ void cFlatBaseRender::contentDraw(void) {
         currentHeight = (i)*fontHeight;
         contentPixmap->DrawText(cPoint(0, currentHeight), contentWrapper.GetLine(i), contentColorFg, contentColorBg, font, contentWidth);
     }
+}
+
+void cFlatBaseRender::ProgressBarCreate(int Left, int Top, int Width, tColor ColorFg, tColor ColorBarFg, tColor ColorBg) {
+    progressBarTop = Top;
+    progressBarWidth = Width;
+
+    progressBarColorFg = ColorFg;
+    progressBarColorBarFg = ColorBarFg;
+    progressBarColorBg = ColorBg;
+    
+    progressBarPixmap = osd->CreatePixmap(2, cRect(Left, Top, Width, progressBarHeight));
+    progressBarPixmap->Fill(clrTransparent);
+}
+
+void cFlatBaseRender::ProgressBarDraw(int Current, int Total) {
+    progressBarCurrent = Current;
+    progressBarTotal = Total;
+    int top = progressBarHeight / 2 - 3;
+    double percentLeft = ((double)Current) / (double)Total;
+
+    progressBarPixmap->Fill( progressBarColorBg );
+
+    progressBarPixmap->DrawRectangle(cRect( 0, top + 2, progressBarWidth, 2), progressBarColorFg);
+    if (Current > 0)
+        progressBarPixmap->DrawRectangle(cRect( 0, top, (progressBarWidth * percentLeft), 6), progressBarColorBarFg);
+}
+
+int cFlatBaseRender::ProgressBarHeight(void) {
+    return progressBarHeight;
+}
+
+
+void cFlatBaseRender::ProgressBarDrawMarks(const cMarks *Marks, tColor Color, tColor ColorCurrent) {
+    progressBarColorMark = Color;
+    progressBarColorMarkCurrent = ColorCurrent;
+
+    if( Marks ) {
+        bool Start = true;
+        for( const cMark *m = Marks->First(); m; m = Marks->Next(m) ) {
+            int p1 = ProgressBarMarkPos( m->Position() );
+            ProgressBarDrawMark(p1, Start, m->Position() == progressBarCurrent);
+            Start = !Start;
+        }
+    }
+}
+
+int cFlatBaseRender::ProgressBarMarkPos(int P) {
+    return P * progressBarWidth / progressBarTotal;
+}
+
+void cFlatBaseRender::ProgressBarDrawMark(int X, bool Start, bool Current)
+{
+    if( Start )
+        if( Current )
+            progressBarPixmap->DrawRectangle(cRect( X-5, 0, 10, 3), progressBarColorMarkCurrent);
+        else
+            progressBarPixmap->DrawRectangle(cRect( X-3, 0, 6, 3), progressBarColorMark);            
+    else
+        if( Current )
+            progressBarPixmap->DrawRectangle(cRect( X-5, progressBarHeight - 3, 10, 3), progressBarColorMarkCurrent);
+        else
+            progressBarPixmap->DrawRectangle(cRect( X-3, progressBarHeight - 3, 6, 3), progressBarColorMark);
+    
+    if( Current )
+        progressBarPixmap->DrawRectangle(cRect( X-1, 0, 2, progressBarHeight), progressBarColorMarkCurrent);
+    else
+        progressBarPixmap->DrawRectangle(cRect( X-1, 0, 2, progressBarHeight), progressBarColorMark);
 }

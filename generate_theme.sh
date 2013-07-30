@@ -1,8 +1,8 @@
 #!/bin/bash
 
 echo "*********************************"
-echo "* theme generator version 0.1   *"
-echo "* for skinflat version <= 0.0.1 *"
+echo "* theme generator version 0.0.2 *"
+echo "* for skinflat version = 0.0.2  *"
 echo "*********************************"
 
 echo ""
@@ -14,7 +14,7 @@ echo "  you only need 4 colors"
 echo "    + Backround "
 echo "    + Foreground (Font, Scrollbar, Progressbar) "
 echo "    + Current (current menu item background) "
-echo "    + Selable (selable menu item background) "
+echo "    + Nonselable (nonselable menu item background) "
 echo ""
 echo "normale mode: "
 echo "   you need 10 colors"
@@ -43,16 +43,16 @@ then
     read Foreground
     echo -n "Menu item current background color: "
     read ItemCurBG
-    echo -n "Menu item selectable background color: "
-    read ItemSelableBG
+    echo -n "Menu item not selectable background color: "
+    read ItemBG
     
     Font=$Foreground
     TitleFont=$Foreground
-    ProgressBG=$Foreground
+    ProgressBarFG=$Foreground
     ProgressFG=$Foreground
-    ScrollbarBG=$Foreground
+    ScrollbarBarFG=$Foreground
     ScrollbarFG=$Foreground
-    ItemBG=$Background
+    ItemSelableBG=$Background
 
 else
     echo -n "Name: "
@@ -69,12 +69,12 @@ else
     read ItemCurBG
     echo -n "Menu item selectable background color: "
     read ItemSelableBG
-    echo -n "Progressbar background color: "
-    read ProgressBG
+    echo -n "Progressbar bar foreground color: "
+    read ProgressBarFG
     echo -n "Progressbar foreground color: "
     read ProgressFG
-    echo -n "Scrollbar background color: "
-    read ScrollbarBG
+    echo -n "Scrollbar bar foreground color: "
+    read ScrollbarBarFG
     echo -n "Scrollbar foreground color: "
     read ScrollbarFG
 fi
@@ -101,7 +101,8 @@ echo "clrChannelBg = $Background" >> $FILE
 echo "clrChannelFontTitle = $TitleFont" >> $FILE
 echo "clrChannelFontEpg = $Font" >> $FILE
 echo "clrChannelProgressFg = $ProgressFG" >> $FILE
-echo "clrChannelProgressBg = $ProgressBG" >> $FILE
+echo "clrChannelProgressBarFg = $ProgressBarFG" >> $FILE
+echo "clrChannelProgressBg = $Background" >> $FILE
 echo "clrItemBg = $ItemBG" >> $FILE
 echo "clrItemFont = $Font" >> $FILE
 echo "clrItemCurrentBg = $ItemCurBG" >> $FILE
@@ -109,7 +110,8 @@ echo "clrItemCurrentFont = $Font" >> $FILE
 echo "clrItemSelableBg = $ItemSelableBG" >> $FILE
 echo "clrItemSelableFont = $Font" >> $FILE
 echo "clrScrollbarFg = $ScrollbarFG" >> $FILE
-echo "clrScrollbarBg = $ScrollbarBG" >> $FILE
+echo "clrScrollbarBarFg = $ScrollbarBarFG" >> $FILE
+echo "clrScrollbarBg = $Background" >> $FILE
 echo "clrMenuEventBg = $Background" >> $FILE
 echo "clrMenuEventFontTitle = $TitleFont" >> $FILE
 echo "clrMenuEventFontInfo = $Font" >> $FILE
@@ -121,7 +123,10 @@ echo "clrMenuTextFont = $Font" >> $FILE
 echo "clrReplayBg = $Background" >> $FILE
 echo "clrReplayFont = $Font" >> $FILE
 echo "clrReplayProgressFg = $ProgressFG" >> $FILE
-echo "clrReplayProgressBg = $ProgressBG" >> $FILE
+echo "clrReplayProgressBarFg = $ProgressBarFG" >> $FILE
+echo "clrReplayProgressBg = $Background" >> $FILE
+echo "clrReplayMarkFg = $ProgressFG" >> $FILE
+echo "clrReplayMarkCurrentFg = $ProgressFG" >> $FILE
 echo "clrTrackItemBg = $ItemBG" >> $FILE
 echo "clrTrackItemFont = $Font" >> $FILE
 echo "clrTrackItemCurrentBg = $ItemCurBG" >> $FILE
@@ -129,7 +134,8 @@ echo "clrTrackItemCurrentFont = $Font" >> $FILE
 echo "clrVolumeBg = $Background" >> $FILE
 echo "clrVolumeFont = $Font" >> $FILE
 echo "clrVolumeProgressFg = $ProgressFG" >> $FILE
-echo "clrVolumeProgressBg = $ProgressBG" >> $FILE
+echo "clrVolumeProgressBarFg = $ProgressBarFG" >> $FILE
+echo "clrVolumeProgressBg = $Background" >> $FILE
 
 echo ""
 echo "Theme <${FILE}> saved"

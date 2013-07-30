@@ -26,6 +26,13 @@ class cFlatBaseRender
         cString topBarLastDate;
         int topBarHeight;
 
+        // Progressbar
+        cPixmap *progressBarPixmap;
+        int progressBarHeight, progressBarTop, progressBarWidth;
+        int progressBarCurrent, progressBarTotal;
+        tColor progressBarColorFg, progressBarColorBarFg, progressBarColorBg;
+        tColor progressBarColorMark, progressBarColorMarkCurrent;
+        
         // Buttons rot, grün, gelb, blau
         cPixmap *buttonsPixmap;
         int buttonsWidth, buttonsHeight;
@@ -45,6 +52,9 @@ class cFlatBaseRender
 
         void contentDraw(void);
         double ScrollbarSize(void);
+
+        void ProgressBarDrawMark(int X, bool Start, bool Current);
+        int ProgressBarMarkPos(int P);
 
     public:
         cImageLoader imgLoader;
@@ -66,6 +76,11 @@ class cFlatBaseRender
         void MessageSet(eMessageType Type, const char *Text);
         void MessageClear(void);
 
+        void ProgressBarCreate(int Left, int Top, int Width, tColor ColorFg, tColor ColorBarFg, tColor ColorBg);
+        void ProgressBarDraw(int Current, int Total);
+        int ProgressBarHeight(void);
+        void ProgressBarDrawMarks(const cMarks *Marks, tColor Color, tColor ColorCurrent);
+        
         void ContentCreate(int Left, int Top, int Width, int Height);
         void ContentSet(const char *Text, tColor ColorFg, tColor ColorBg);
         bool ContentIsShown(void);

@@ -8,11 +8,11 @@ cFlatDisplayMenu::cFlatDisplayMenu(void) {
 
     itemHeight = fontHeight + 2;
 
-    scrollBarWidth = 10;
+    scrollBarWidth = 20;
     scrollBarHeight = osdHeight - (topBarHeight + buttonsHeight + marginItem*2 );
     scrollBarTop = topBarHeight + marginItem;
 
-    menuWidth = osdWidth - scrollBarWidth - marginItem;
+    menuWidth = osdWidth - scrollBarWidth;
 
     menuPixmap = osd->CreatePixmap(1, cRect(0, topBarHeight + marginItem, menuWidth, scrollBarHeight ));
     
@@ -36,9 +36,10 @@ void cFlatDisplayMenu::DrawScrollbar(int Total, int Offset, int Shown, int Top, 
         int scrollTop = min(int(Top + (Height) * double(Offset) / Total + 0.5), Top + Height - scrollHeight);
 
         scrollbarPixmap->Fill(clrTransparent);
+        scrollbarPixmap->DrawRectangle(cRect(5, Top, scrollBarWidth-5, Height), Theme.Color(clrScrollbarBg));
 
-        scrollbarPixmap->DrawRectangle(cRect(0, Top, 2, Height), Theme.Color(clrScrollbarBg));
-        scrollbarPixmap->DrawRectangle(cRect(0, scrollTop, 5, scrollHeight), Theme.Color(clrScrollbarFg));
+        scrollbarPixmap->DrawRectangle(cRect(15, Top, 2, Height), Theme.Color(clrScrollbarFg));
+        scrollbarPixmap->DrawRectangle(cRect(15, scrollTop, 5, scrollHeight), Theme.Color(clrScrollbarBarFg));
     }
 }
 

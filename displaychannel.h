@@ -9,13 +9,9 @@ class cFlatDisplayChannel : public cFlatBaseRender, public cSkinDisplayChannel {
         cString channelName;
 
         cPixmap *chanInfoTopPixmap;
-        cPixmap *chanInfoProgressPixmap;
         cPixmap *chanInfoBottomPixmap;
 
         int heightBottom;
-        int progressBarHeight;
-
-        void DrawProgressBar(int Current, int Total);
     public:
         cFlatDisplayChannel(bool WithInfo);
         virtual ~cFlatDisplayChannel();
