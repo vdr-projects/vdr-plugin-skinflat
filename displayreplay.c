@@ -10,15 +10,19 @@ cFlatDisplayReplay::cFlatDisplayReplay(bool ModeOnly) {
     MessageCreate();
 
     labelPixmap = osd->CreatePixmap(1, cRect(0, osdHeight - labelHeight, osdWidth, labelHeight));
-
+    
     ProgressBarCreate(0, osdHeight - labelHeight - ProgressBarHeight() - marginItem, osdWidth,
         Theme.Color(clrReplayProgressFg), Theme.Color(clrReplayProgressBarFg), Theme.Color(clrReplayProgressBg));
 
+    labelJump = osd->CreatePixmap(1, cRect(0, osdHeight - labelHeight*2 - ProgressBarHeight() - marginItem*2, osdWidth, labelHeight));
+    
     labelPixmap->Fill(Theme.Color(clrReplayBg));
+    labelJump->Fill(clrTransparent);
 }
 
 cFlatDisplayReplay::~cFlatDisplayReplay() {
     osd->DestroyPixmap(labelPixmap);
+    osd->DestroyPixmap(labelJump);
 }
 
 void cFlatDisplayReplay::SetRecording(const cRecording *Recording) {
@@ -112,10 +116,15 @@ void cFlatDisplayReplay::UpdateInfo(void) {
 }
 
 void cFlatDisplayReplay::SetJump(const char *Jump) {
+    if( !Jump )
+    {
+        labelJump->Fill(clrTransparent);
+        return;
+    }        
     int left = osdWidth - font->Width(Jump);
     left /= 2;
     
-    labelPixmap->DrawText(cPoint(left, 0), Jump, Theme.Color(clrReplayFont), Theme.Color(clrReplayBg), font, font->Width(Jump), fontHeight, taCenter);
+    labelJump->DrawText(cPoint(left, 0), Jump, Theme.Color(clrReplayFont), Theme.Color(clrReplayBg), font, font->Width(Jump), fontHeight, taCenter);
 }
 
 void cFlatDisplayReplay::SetMessage(eMessageType Type, const char *Text) {
