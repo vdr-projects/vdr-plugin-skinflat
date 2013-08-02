@@ -9,6 +9,7 @@ class cFlatDisplayReplay : public cFlatBaseRender, public cSkinDisplayReplay {
         int labelHeight;
         cPixmap *labelPixmap;
         cPixmap *labelJump;
+        cPixmap *iconsPixmap;
     
         void UpdateInfo(void);
     public:

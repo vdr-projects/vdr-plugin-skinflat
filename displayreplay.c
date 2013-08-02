@@ -10,6 +10,7 @@ cFlatDisplayReplay::cFlatDisplayReplay(bool ModeOnly) {
     MessageCreate();
 
     labelPixmap = osd->CreatePixmap(1, cRect(0, osdHeight - labelHeight, osdWidth, labelHeight));
+    iconsPixmap = osd->CreatePixmap(2, cRect(0, osdHeight - labelHeight, osdWidth, labelHeight));
     
     ProgressBarCreate(0, osdHeight - labelHeight - ProgressBarHeight() - marginItem, osdWidth,
         Theme.Color(clrReplayProgressFg), Theme.Color(clrReplayProgressBarFg), Theme.Color(clrReplayProgressBg));
@@ -23,6 +24,7 @@ cFlatDisplayReplay::cFlatDisplayReplay(bool ModeOnly) {
 cFlatDisplayReplay::~cFlatDisplayReplay() {
     osd->DestroyPixmap(labelPixmap);
     osd->DestroyPixmap(labelJump);
+    osd->DestroyPixmap(iconsPixmap);
 }
 
 void cFlatDisplayReplay::SetRecording(const cRecording *Recording) {
@@ -46,8 +48,9 @@ void cFlatDisplayReplay::SetMode(bool Play, bool Forward, int Speed) {
         int left = osdWidth - (labelHeight * 4 + marginItem * 3);
         left /= 2;
 
+        iconsPixmap->Fill(clrTransparent);
+
         labelPixmap->DrawRectangle(cRect( left - font->Width("33") - marginItem, 0, labelHeight*4 + marginItem*6 + font->Width("33")*2, labelHeight), Theme.Color(clrReplayBg) );
-        labelPixmap->DrawRectangle(cRect( left - marginItem, 0, labelHeight*4 + marginItem*4, labelHeight), clrTransparent );
 
         cString rewind, pause, play, forward;
         cString speed;
@@ -82,13 +85,13 @@ void cFlatDisplayReplay::SetMode(bool Play, bool Forward, int Speed) {
         }
 
         if( imgLoader.LoadIcon(*rewind, labelHeight, labelHeight) )
-            labelPixmap->DrawImage( cPoint(left, 0), imgLoader.GetImage() );
+            iconsPixmap->DrawImage( cPoint(left, 0), imgLoader.GetImage() );
         if( imgLoader.LoadIcon(*pause, labelHeight, labelHeight) )
-            labelPixmap->DrawImage( cPoint(left + labelHeight + marginItem, 0), imgLoader.GetImage() );
+            iconsPixmap->DrawImage( cPoint(left + labelHeight + marginItem, 0), imgLoader.GetImage() );
         if( imgLoader.LoadIcon(*play, labelHeight, labelHeight) )
-            labelPixmap->DrawImage( cPoint(left + labelHeight*2 + marginItem*2, 0), imgLoader.GetImage() );
+            iconsPixmap->DrawImage( cPoint(left + labelHeight*2 + marginItem*2, 0), imgLoader.GetImage() );
         if( imgLoader.LoadIcon(*forward, labelHeight, labelHeight) )
-            labelPixmap->DrawImage( cPoint(left + labelHeight*3 + marginItem*3, 0), imgLoader.GetImage() );
+            iconsPixmap->DrawImage( cPoint(left + labelHeight*3 + marginItem*3, 0), imgLoader.GetImage() );
 
     }
 }

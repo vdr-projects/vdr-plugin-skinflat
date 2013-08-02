@@ -1,7 +1,9 @@
 VDR Plugin 'skinflat' Revision History
 ---------------------------------------
+2013-XX-XX: Version 0.0.3
+- [fix] replay jump display
 
-2013-30-08: Version 0.0.2
+2013-30-07: Version 0.0.2
 - [add] replay marks
 - [change] colors
 - [change] progressbar

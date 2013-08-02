@@ -17,7 +17,8 @@ cFlatDisplayChannel::cFlatDisplayChannel(bool WithInfo) {
 
     int height = heightBottom;
     chanInfoBottomPixmap = osd->CreatePixmap(1, cRect(0, osdHeight - height, osdWidth, heightBottom));
-
+    chanLogoPixmap = osd->CreatePixmap(2, cRect(0, osdHeight - height, heightBottom, heightBottom));
+    
     height += ProgressBarHeight();
     ProgressBarCreate(0, osdHeight - height, osdWidth,
         Theme.Color(clrChannelProgressFg), Theme.Color(clrChannelProgressBarFg), Theme.Color(clrChannelProgressBg));
@@ -30,6 +31,7 @@ cFlatDisplayChannel::~cFlatDisplayChannel() {
     if (osd) {
         osd->DestroyPixmap(chanInfoTopPixmap);
         osd->DestroyPixmap(chanInfoBottomPixmap);
+        osd->DestroyPixmap(chanLogoPixmap);
     }
 }
 
@@ -56,13 +58,14 @@ void cFlatDisplayChannel::SetEvents(const cEvent *Present, const cEvent *Followi
     cString epg("");
 
     chanInfoBottomPixmap->Fill(Theme.Color(clrChannelBg));
+    chanLogoPixmap->Fill(clrTransparent);
 
     int imageHeight = heightBottom - marginItem*2;
     if( imgLoader.LoadLogo(*channelName, imageHeight, imageHeight) ) {
         int imageLeft = marginItem;
         int imageTop = (heightBottom - imgLoader.Height() ) / 2;
         
-        chanInfoBottomPixmap->DrawImage( cPoint(imageLeft, imageTop), imgLoader.GetImage() );
+        chanLogoPixmap->DrawImage( cPoint(imageLeft, imageTop), imgLoader.GetImage() );
     }
 
     int left = heightBottom + marginItem;

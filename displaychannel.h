@@ -10,7 +10,8 @@ class cFlatDisplayChannel : public cFlatBaseRender, public cSkinDisplayChannel {
 
         cPixmap *chanInfoTopPixmap;
         cPixmap *chanInfoBottomPixmap;
-
+        cPixmap *chanLogoPixmap;
+    
         int heightBottom;
     public:
         cFlatDisplayChannel(bool WithInfo);
