@@ -29,7 +29,6 @@ class cFlatBaseRender
         // Progressbar
         cPixmap *progressBarPixmap;
         int progressBarHeight, progressBarTop, progressBarWidth;
-        int progressBarCurrent, progressBarTotal;
         tColor progressBarColorFg, progressBarColorBarFg, progressBarColorBg;
         tColor progressBarColorMark, progressBarColorMarkCurrent;
         
@@ -53,8 +52,8 @@ class cFlatBaseRender
         void contentDraw(void);
         double ScrollbarSize(void);
 
-        void ProgressBarDrawMark(int X, bool Start, bool Current);
-        int ProgressBarMarkPos(int P);
+        void ProgressBarDrawMark(int X1, int X0, bool Start, bool Current);
+        int ProgressBarMarkPos(int P, int Total);
 
     public:
         cImageLoader imgLoader;
@@ -79,7 +78,7 @@ class cFlatBaseRender
         void ProgressBarCreate(int Left, int Top, int Width, tColor ColorFg, tColor ColorBarFg, tColor ColorBg);
         void ProgressBarDraw(int Current, int Total);
         int ProgressBarHeight(void);
-        void ProgressBarDrawMarks(const cMarks *Marks, tColor Color, tColor ColorCurrent);
+        void ProgressBarDrawMarks(int Current, int Total, const cMarks *Marks, tColor Color, tColor ColorCurrent);
         
         void ContentCreate(int Left, int Top, int Width, int Height);
         void ContentSet(const char *Text, tColor ColorFg, tColor ColorBg);

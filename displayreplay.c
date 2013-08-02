@@ -97,9 +97,7 @@ void cFlatDisplayReplay::SetMode(bool Play, bool Forward, int Speed) {
 }
 
 void cFlatDisplayReplay::SetProgress(int Current, int Total) {
-    ProgressBarDraw(Current, Total);
-    if( Total > 0 )
-        ProgressBarDrawMarks(marks, Theme.Color(clrReplayMarkFg), Theme.Color(clrReplayMarkCurrentFg));
+    ProgressBarDrawMarks(Current, Total, marks, Theme.Color(clrReplayMarkFg), Theme.Color(clrReplayMarkCurrentFg));
 }
 
 void cFlatDisplayReplay::SetCurrent(const char *Current) {
