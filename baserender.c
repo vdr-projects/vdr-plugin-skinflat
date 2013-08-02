@@ -311,8 +311,8 @@ int cFlatBaseRender::ProgressBarHeight(void) {
 void cFlatBaseRender::ProgressBarDrawMarks(int Current, int Total, const cMarks *Marks, tColor Color, tColor ColorCurrent) {
     progressBarColorMark = Color;
     progressBarColorMarkCurrent = ColorCurrent;
-    int posLast = 0;
-    int posCurrent = 0;
+    int posMark = 0, posMarkLast = 0;
+    int posCurrent;
     
     int top = progressBarHeight / 2 - 3;
     progressBarPixmap->Fill( progressBarColorBg );
@@ -321,12 +321,18 @@ void cFlatBaseRender::ProgressBarDrawMarks(int Current, int Total, const cMarks 
     if( Marks ) {
         bool Start = true;
         for( const cMark *m = Marks->First(); m; m = Marks->Next(m) ) {
-            posCurrent = ProgressBarMarkPos( m->Position(), Total );
-            ProgressBarDrawMark(posCurrent, posLast, Start, m->Position() == Current);
-            posLast = posCurrent;
+            posMark = ProgressBarMarkPos( m->Position(), Total );
+            posCurrent = ProgressBarMarkPos( Current, Total );
+
+            ProgressBarDrawMark(posMark, posMarkLast, posCurrent, Start, m->Position() == Current);
+            posMarkLast = posMark;
             Start = !Start;
         }
-        progressBarPixmap->DrawRectangle(cRect( posLast, top, progressBarWidth - posLast, 6), progressBarColorBarFg);
+        if( !Start ) {
+            progressBarPixmap->DrawRectangle(cRect( posMarkLast, top, progressBarWidth - posMarkLast, 6), progressBarColorBarFg);
+            if( posCurrent > posMarkLast )
+                progressBarPixmap->DrawRectangle(cRect( posMarkLast, top, posCurrent - posMarkLast, 6), progressBarColorMarkCurrent);
+        }
     } else {
         ProgressBarDraw(Current, Total);
     }
@@ -336,26 +342,32 @@ int cFlatBaseRender::ProgressBarMarkPos(int P, int Total) {
     return P * progressBarWidth / Total;
 }
 
-void cFlatBaseRender::ProgressBarDrawMark(int X1, int X0, bool Start, bool Current)
+void cFlatBaseRender::ProgressBarDrawMark(int posMark, int posMarkLast, int posCurrent, bool Start, bool isCurrent)
 {
     int top = progressBarHeight / 2 - 3;
     
     if( Start ) {
-        if( Current )
-            progressBarPixmap->DrawRectangle(cRect( X1-5, 0, 10, 3), progressBarColorMarkCurrent);
+        if( isCurrent )
+            progressBarPixmap->DrawRectangle(cRect( posMark-5, 0, 10, 3), progressBarColorMarkCurrent);
         else
-            progressBarPixmap->DrawRectangle(cRect( X1-3, 0, 6, 3), progressBarColorMark);
+            progressBarPixmap->DrawRectangle(cRect( posMark-3, 0, 6, 3), progressBarColorMark);
     } else {
-        if( Current )
-            progressBarPixmap->DrawRectangle(cRect( X1-5, progressBarHeight - 3, 10, 3), progressBarColorMarkCurrent);
+        if( isCurrent )
+            progressBarPixmap->DrawRectangle(cRect( posMark-5, progressBarHeight - 3, 10, 3), progressBarColorMarkCurrent);
         else
-            progressBarPixmap->DrawRectangle(cRect( X1-3, progressBarHeight - 3, 6, 3), progressBarColorMark);
-
-        progressBarPixmap->DrawRectangle(cRect( X0, top, X1 - X0, 6), progressBarColorBarFg);
+            progressBarPixmap->DrawRectangle(cRect( posMark-3, progressBarHeight - 3, 6, 3), progressBarColorMark);
+        
+        if( posCurrent > posMark )
+            progressBarPixmap->DrawRectangle(cRect( posMarkLast, top, posMark - posMarkLast, 6), progressBarColorMarkCurrent);
+        else {
+            progressBarPixmap->DrawRectangle(cRect( posMarkLast, top, posMark - posMarkLast, 6), progressBarColorBarFg);
+            if( posCurrent > posMarkLast )
+                progressBarPixmap->DrawRectangle(cRect( posMarkLast, top, posCurrent - posMarkLast, 6), progressBarColorMarkCurrent);
+        }
     }
     
-    if( Current )
-        progressBarPixmap->DrawRectangle(cRect( X1-1, 0, 2, progressBarHeight), progressBarColorMarkCurrent);
+    if( isCurrent )
+        progressBarPixmap->DrawRectangle(cRect( posMark-1, 0, 2, progressBarHeight), progressBarColorMarkCurrent);
     else
-        progressBarPixmap->DrawRectangle(cRect( X1-1, 0, 2, progressBarHeight), progressBarColorMark);
+        progressBarPixmap->DrawRectangle(cRect( posMark-1, 0, 2, progressBarHeight), progressBarColorMark);
 }

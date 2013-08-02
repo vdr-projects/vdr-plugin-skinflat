@@ -52,7 +52,7 @@ class cFlatBaseRender
         void contentDraw(void);
         double ScrollbarSize(void);
 
-        void ProgressBarDrawMark(int X1, int X0, bool Start, bool Current);
+        void ProgressBarDrawMark(int posMark, int posMarkLast, int posCurrent, bool Start, bool isCurrent);
         int ProgressBarMarkPos(int P, int Total);
 
     public:
