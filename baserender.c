@@ -316,6 +316,8 @@ void cFlatBaseRender::ProgressBarDrawMarks(int Current, int Total, const cMarks 
     
     int top = progressBarHeight / 2 - 3;
     progressBarPixmap->Fill( progressBarColorBg );
+    
+    // the small line
     progressBarPixmap->DrawRectangle(cRect( 0, top + 2, progressBarWidth, 2), progressBarColorFg);
 
     if( Marks ) {
@@ -347,16 +349,20 @@ void cFlatBaseRender::ProgressBarDrawMark(int posMark, int posMarkLast, int posC
     int top = progressBarHeight / 2 - 3;
     
     if( Start ) {
+        if( posCurrent > posMark )
+            progressBarPixmap->DrawRectangle(cRect( posMarkLast, top + 2, posMark - posMarkLast, 2), progressBarColorMarkCurrent);
+        else {
+            // marker
+            progressBarPixmap->DrawRectangle(cRect( posCurrent - 3, top, 6, 6), progressBarColorMarkCurrent);
+            if( posCurrent > posMarkLast )
+                progressBarPixmap->DrawRectangle(cRect( posMarkLast, top + 2, posCurrent - posMarkLast, 2), progressBarColorMarkCurrent);
+        }
+        
         if( isCurrent )
             progressBarPixmap->DrawRectangle(cRect( posMark-5, 0, 10, 3), progressBarColorMarkCurrent);
         else
             progressBarPixmap->DrawRectangle(cRect( posMark-3, 0, 6, 3), progressBarColorMark);
     } else {
-        if( isCurrent )
-            progressBarPixmap->DrawRectangle(cRect( posMark-5, progressBarHeight - 3, 10, 3), progressBarColorMarkCurrent);
-        else
-            progressBarPixmap->DrawRectangle(cRect( posMark-3, progressBarHeight - 3, 6, 3), progressBarColorMark);
-        
         if( posCurrent > posMark )
             progressBarPixmap->DrawRectangle(cRect( posMarkLast, top, posMark - posMarkLast, 6), progressBarColorMarkCurrent);
         else {
@@ -364,10 +370,21 @@ void cFlatBaseRender::ProgressBarDrawMark(int posMark, int posMarkLast, int posC
             if( posCurrent > posMarkLast )
                 progressBarPixmap->DrawRectangle(cRect( posMarkLast, top, posCurrent - posMarkLast, 6), progressBarColorMarkCurrent);
         }
+
+        if( isCurrent )
+            progressBarPixmap->DrawRectangle(cRect( posMark-5, progressBarHeight - 3, 10, 3), progressBarColorMarkCurrent);
+        else
+            progressBarPixmap->DrawRectangle(cRect( posMark-3, progressBarHeight - 3, 6, 3), progressBarColorMark);
     }
     
-    if( isCurrent )
-        progressBarPixmap->DrawRectangle(cRect( posMark-1, 0, 2, progressBarHeight), progressBarColorMarkCurrent);
+    if( posCurrent == posMark )
+        progressBarPixmap->DrawRectangle(cRect( posMark-2, 0, 4, progressBarHeight), progressBarColorMarkCurrent);
     else
         progressBarPixmap->DrawRectangle(cRect( posMark-1, 0, 2, progressBarHeight), progressBarColorMark);
+
+    if( posCurrent == posMarkLast )
+        progressBarPixmap->DrawRectangle(cRect( posMarkLast-2, 0, 4, progressBarHeight), progressBarColorMarkCurrent);
+    else
+        progressBarPixmap->DrawRectangle(cRect( posMarkLast-1, 0, 2, progressBarHeight), progressBarColorMark);
+        
 }

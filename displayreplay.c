@@ -1,7 +1,7 @@
 #include "displayreplay.h"
 
 cFlatDisplayReplay::cFlatDisplayReplay(bool ModeOnly) {
-    labelHeight = fontHeight;
+    labelHeight = fontHeight + fontSmlHeight;
     current = "";
     total = "";
 
@@ -15,7 +15,7 @@ cFlatDisplayReplay::cFlatDisplayReplay(bool ModeOnly) {
     ProgressBarCreate(0, osdHeight - labelHeight - ProgressBarHeight() - marginItem, osdWidth,
         Theme.Color(clrReplayProgressFg), Theme.Color(clrReplayProgressBarFg), Theme.Color(clrReplayProgressBg));
 
-    labelJump = osd->CreatePixmap(1, cRect(0, osdHeight - labelHeight*2 - ProgressBarHeight() - marginItem*2, osdWidth, labelHeight));
+    labelJump = osd->CreatePixmap(1, cRect(0, osdHeight - labelHeight - ProgressBarHeight() - marginItem*2 - fontHeight, osdWidth, fontHeight));
     
     labelPixmap->Fill(Theme.Color(clrReplayBg));
     labelJump->Fill(clrTransparent);
@@ -36,7 +36,7 @@ void cFlatDisplayReplay::SetRecording(const cRecording *Recording) {
     else
         info = cString::sprintf("%s %s", *ShortDateString(Recording->Start()), *TimeString(Recording->Start()));
 
-    labelPixmap->DrawText(cPoint(0, 0), info, Theme.Color(clrReplayFont), Theme.Color(clrReplayBg), font, osdWidth);
+    labelPixmap->DrawText(cPoint(0, fontHeight), info, Theme.Color(clrReplayFont), Theme.Color(clrReplayBg), fontSml, osdWidth);
 }
 
 void cFlatDisplayReplay::SetTitle(const char *Title) {
@@ -45,12 +45,12 @@ void cFlatDisplayReplay::SetTitle(const char *Title) {
 
 void cFlatDisplayReplay::SetMode(bool Play, bool Forward, int Speed) {
     if( Setup.ShowReplayMode ) {
-        int left = osdWidth - (labelHeight * 4 + marginItem * 3);
+        int left = osdWidth - (fontHeight * 4 + marginItem * 3);
         left /= 2;
 
         iconsPixmap->Fill(clrTransparent);
 
-        labelPixmap->DrawRectangle(cRect( left - font->Width("33") - marginItem, 0, labelHeight*4 + marginItem*6 + font->Width("33")*2, labelHeight), Theme.Color(clrReplayBg) );
+        labelPixmap->DrawRectangle(cRect( left - font->Width("33") - marginItem, 0, fontHeight*4 + marginItem*6 + font->Width("33")*2, fontHeight), Theme.Color(clrReplayBg) );
 
         cString rewind, pause, play, forward;
         cString speed;
@@ -74,7 +74,7 @@ void cFlatDisplayReplay::SetMode(bool Play, bool Forward, int Speed) {
                 pause = "pause";
                 play = "play";
                 forward = "forward_sel";
-                labelPixmap->DrawText(cPoint(left + labelHeight*4 + marginItem*4, 0), speed, Theme.Color(clrReplayFont), Theme.Color(clrReplayBg), font);
+                labelPixmap->DrawText(cPoint(left + fontHeight*4 + marginItem*4, 0), speed, Theme.Color(clrReplayFont), Theme.Color(clrReplayBg), font);
             } else {
                 rewind = "rewind_sel";
                 pause = "pause";
@@ -84,14 +84,14 @@ void cFlatDisplayReplay::SetMode(bool Play, bool Forward, int Speed) {
             }                
         }
 
-        if( imgLoader.LoadIcon(*rewind, labelHeight, labelHeight) )
+        if( imgLoader.LoadIcon(*rewind, fontHeight, fontHeight) )
             iconsPixmap->DrawImage( cPoint(left, 0), imgLoader.GetImage() );
-        if( imgLoader.LoadIcon(*pause, labelHeight, labelHeight) )
-            iconsPixmap->DrawImage( cPoint(left + labelHeight + marginItem, 0), imgLoader.GetImage() );
-        if( imgLoader.LoadIcon(*play, labelHeight, labelHeight) )
-            iconsPixmap->DrawImage( cPoint(left + labelHeight*2 + marginItem*2, 0), imgLoader.GetImage() );
-        if( imgLoader.LoadIcon(*forward, labelHeight, labelHeight) )
-            iconsPixmap->DrawImage( cPoint(left + labelHeight*3 + marginItem*3, 0), imgLoader.GetImage() );
+        if( imgLoader.LoadIcon(*pause, fontHeight, fontHeight) )
+            iconsPixmap->DrawImage( cPoint(left + fontHeight + marginItem, 0), imgLoader.GetImage() );
+        if( imgLoader.LoadIcon(*play, fontHeight, fontHeight) )
+            iconsPixmap->DrawImage( cPoint(left + fontHeight*2 + marginItem*2, 0), imgLoader.GetImage() );
+        if( imgLoader.LoadIcon(*forward, fontHeight, fontHeight) )
+            iconsPixmap->DrawImage( cPoint(left + fontHeight*3 + marginItem*3, 0), imgLoader.GetImage() );
 
     }
 }
@@ -111,9 +111,9 @@ void cFlatDisplayReplay::SetTotal(const char *Total) {
 }
 
 void cFlatDisplayReplay::UpdateInfo(void) {
-    cString Info = cString::sprintf("%s - %s", *current, *total);
-    int right = osdWidth - font->Width(Info);
-    labelPixmap->DrawText(cPoint(right, 0), Info, Theme.Color(clrReplayFont), Theme.Color(clrReplayBg), font, font->Width(Info), fontHeight);
+    int right = osdWidth - font->Width(total);
+    labelPixmap->DrawText(cPoint(0, 0), current, Theme.Color(clrReplayFont), Theme.Color(clrReplayBg), font, font->Width(current), fontHeight);
+    labelPixmap->DrawText(cPoint(right, 0), total, Theme.Color(clrReplayFont), Theme.Color(clrReplayBg), font, font->Width(total), fontHeight);
 }
 
 void cFlatDisplayReplay::SetJump(const char *Jump) {
