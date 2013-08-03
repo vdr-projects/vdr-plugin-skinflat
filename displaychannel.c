@@ -11,8 +11,8 @@ cFlatDisplayChannel::cFlatDisplayChannel(bool WithInfo) {
     MessageCreate();
 
     // von unten noch oben
-    // 2 * EPG + 2 * EPGsml
-    heightBottom = (fontHeight * 2) + (fontSmlHeight * 2) + ProgressBarHeight(); // Top, Buttom, Between
+    // 2*EPG + 2*EPGsml
+    heightBottom = (fontHeight*2) + (fontSmlHeight*2) + marginItem; // Top, Buttom, Between
     int heightTop = fontHeight;
 
     int height = heightBottom;
@@ -83,7 +83,7 @@ void cFlatDisplayChannel::SetEvents(const cEvent *Present, const cEvent *Followi
         int s = (int)(time(NULL) - Present->StartTime()) / 60;
         int sleft = (Present->Duration() / 60) - s;
 
-        cString seen = cString::sprintf("%d-/%d+ (%d) min", s, sleft, Present->Duration() / 60);
+        cString seen = cString::sprintf("%d-/%d+ %d min", s, sleft, Present->Duration() / 60);
         int seenWidth = fontSml->Width(*seen);
 
         if( epgWidth > osdWidth - left - timeStringWidth ) {
@@ -104,9 +104,9 @@ void cFlatDisplayChannel::SetEvents(const cEvent *Present, const cEvent *Followi
             epgShort = Present->ShortText();
         }
         
-        chanInfoBottomPixmap->DrawText(cPoint(osdWidth - timeStringWidth, 0), *timeString,
+        chanInfoBottomPixmap->DrawText(cPoint(osdWidth - timeStringWidth - marginItem * 2, 0), *timeString,
                 Theme.Color(clrChannelFontEpg), Theme.Color(clrChannelBg), fontSml);
-        chanInfoBottomPixmap->DrawText(cPoint(osdWidth - seenWidth, fontSmlHeight), *seen,
+        chanInfoBottomPixmap->DrawText(cPoint(osdWidth - seenWidth - marginItem * 2, fontSmlHeight), *seen,
                 Theme.Color(clrChannelFontEpg), Theme.Color(clrChannelBg), fontSml);
         
         chanInfoBottomPixmap->DrawText(cPoint(left, 0), *epg, Theme.Color(clrChannelFontEpg), Theme.Color(clrChannelBg), font);
@@ -143,15 +143,15 @@ void cFlatDisplayChannel::SetEvents(const cEvent *Present, const cEvent *Followi
             epgShort = Following->ShortText();
         }
 
-        chanInfoBottomPixmap->DrawText(cPoint(osdWidth - timeStringWidth, fontHeight + fontSmlHeight), *timeString,
-                Theme.Color(clrChannelFontEpg), Theme.Color(clrChannelBg), fontSml);
-        chanInfoBottomPixmap->DrawText(cPoint(osdWidth - durWidth, fontHeight + fontSmlHeight*2), *dur,
-                Theme.Color(clrChannelFontEpg), Theme.Color(clrChannelBg), fontSml);
+        chanInfoBottomPixmap->DrawText(cPoint(osdWidth - timeStringWidth - marginItem * 2, fontHeight + fontSmlHeight), *timeString,
+                Theme.Color(clrChannelFontEpgFollow), Theme.Color(clrChannelBg), fontSml);
+        chanInfoBottomPixmap->DrawText(cPoint(osdWidth - durWidth - marginItem * 2, fontHeight + fontSmlHeight*2), *dur,
+                Theme.Color(clrChannelFontEpgFollow), Theme.Color(clrChannelBg), fontSml);
 
         chanInfoBottomPixmap->DrawText(cPoint(left, fontHeight + fontSmlHeight), *epg,
-                Theme.Color(clrChannelFontEpg), Theme.Color(clrChannelBg), font);
+                Theme.Color(clrChannelFontEpgFollow), Theme.Color(clrChannelBg), font);
         chanInfoBottomPixmap->DrawText(cPoint(left, fontHeight*2 + fontSmlHeight), *epgShort,
-                Theme.Color(clrChannelFontEpg), Theme.Color(clrChannelBg), fontSml);
+                Theme.Color(clrChannelFontEpgFollow), Theme.Color(clrChannelBg), fontSml);
     }
 }
 

@@ -1,7 +1,13 @@
 VDR Plugin 'skinflat' Revision History
 ---------------------------------------
 2013-XX-XX: Version 0.0.3
-- [fix] replay jump display
+- [update] top bar, 2 rows date, color
+- [update] color values
+- [update] channel display, separate color for following epg
+- [update] display message in middle of screen
+- [fix] replay display, marks, position and more
+- [fix] many small fixes
+- [fix] dipslay menu recording info, textcolor
 
 2013-30-07: Version 0.0.2
 - [add] replay marks

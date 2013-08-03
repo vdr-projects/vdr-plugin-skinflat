@@ -157,7 +157,7 @@ void cFlatDisplayMenu::SetRecording(const cRecording *Recording) {
 
     menuPixmap->DrawText(cPoint(0, 0), timeString, Theme.Color(clrMenuRecFontInfo), Theme.Color(clrMenuRecBg), fontSml, menuWidth);
     menuPixmap->DrawText(cPoint(0, fontSmlHeight), title, Theme.Color(clrMenuRecFontTitle), Theme.Color(clrMenuRecBg), font, menuWidth);
-    menuPixmap->DrawText(cPoint(0, fontSmlHeight + fontHeight), shortText, Theme.Color(clrMenuRecFontTitle), Theme.Color(clrMenuRecBg), fontSml, menuWidth);
+    menuPixmap->DrawText(cPoint(0, fontSmlHeight + fontHeight), shortText, Theme.Color(clrMenuRecFontInfo), Theme.Color(clrMenuRecBg), fontSml, menuWidth);
 
     ContentSet( recInfo->Description(), Theme.Color(clrMenuRecFontInfo), Theme.Color(clrMenuRecBg) );
     if( ContentScrollable() )

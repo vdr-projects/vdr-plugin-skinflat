@@ -7,21 +7,22 @@ class cFlatDisplayMenu;
 extern cTheme Theme;
 
 // BUTTONS
-#define CLR_BUTTONRED                       0x99BB0000
-#define CLR_BUTTONGREEN                     0x9900BB00
-#define CLR_BUTTONYELLOW                    0x99BBBB00
-#define CLR_BUTTONBLUE                      0x990000BB
+#define CLR_BUTTONRED                       0xFFBB0000
+#define CLR_BUTTONGREEN                     0xFF00BB00
+#define CLR_BUTTONYELLOW                    0xFFBBBB00
+#define CLR_BUTTONBLUE                      0xFF0000BB
 
 // MESSAGES
-#define CLR_MESSAGESTATUS                   0xBB0000FF
-#define CLR_MESSAGEINFO                     0xBB009900
-#define CLR_MESSAGEWARNING                  0xBBBBBB00
-#define CLR_MESSAGEERROR                    0xBBBB0000
+#define CLR_MESSAGESTATUS                   0xFF0000FF
+#define CLR_MESSAGEINFO                     0xFF009900
+#define CLR_MESSAGEWARNING                  0xFFBBBB00
+#define CLR_MESSAGEERROR                    0xFFBB0000
 
 // TopBar
 THEME_CLR(Theme, clrTopBarBg,               0xBB101010);
 THEME_CLR(Theme, clrTopBarFont,             0xFFEEEEEE);
-THEME_CLR(Theme, clrTopBarDateTimeFont,     0xFFEEEEEE);
+THEME_CLR(Theme, clrTopBarTimeFont,         0xFFEEEEEE);
+THEME_CLR(Theme, clrTopBarDateFont,         0xFFA0A0A0);
 
 // Buttons
 THEME_CLR(Theme, clrButtonBg,               0xBB101010);
@@ -42,8 +43,9 @@ THEME_CLR(Theme, clrMessageError,           CLR_MESSAGEERROR);
 
 // Channel
 THEME_CLR(Theme, clrChannelBg,              0xBB101010);
-THEME_CLR(Theme, clrChannelFontTitle,       0xFFEEEEEE);
+THEME_CLR(Theme, clrChannelFontTitle,       0xFF3090B0);
 THEME_CLR(Theme, clrChannelFontEpg,         0xFFEEEEEE);
+THEME_CLR(Theme, clrChannelFontEpgFollow,   0xFFA0A0A0);
 THEME_CLR(Theme, clrChannelProgressFg,      0xFFEEEEEE);
 THEME_CLR(Theme, clrChannelProgressBarFg,   0xFFEEEEEE);
 THEME_CLR(Theme, clrChannelProgressBg,      0xBB101010);
@@ -60,11 +62,11 @@ THEME_CLR(Theme, clrScrollbarBarFg,         0xFFEEEEEE);
 THEME_CLR(Theme, clrScrollbarBg,            0xBB101010);
 // Menu Event
 THEME_CLR(Theme, clrMenuEventBg,            0xBB101010);
-THEME_CLR(Theme, clrMenuEventFontTitle,     0xFFEEEEEE);
+THEME_CLR(Theme, clrMenuEventFontTitle,     0xFF3090B0);
 THEME_CLR(Theme, clrMenuEventFontInfo,      0xFFEEEEEE);
 // Menu Recording
 THEME_CLR(Theme, clrMenuRecBg,              0xBB101010);
-THEME_CLR(Theme, clrMenuRecFontTitle,       0xFFEEEEEE);
+THEME_CLR(Theme, clrMenuRecFontTitle,       0xFF3090B0);
 THEME_CLR(Theme, clrMenuRecFontInfo,        0xFFEEEEEE);
 // Menu Text (Multiline)
 THEME_CLR(Theme, clrMenuTextBg,             0xBB101010);

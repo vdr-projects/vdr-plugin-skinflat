@@ -69,7 +69,10 @@ void cFlatBaseRender::CreateOsd(int left, int top, int width, int height) {
 }
 
 void cFlatBaseRender::TopBarCreate(void) {
-    topBarHeight = fontHeight;
+    if( fontHeight > fontSmlHeight*2 )
+        topBarHeight = fontHeight;
+    else
+        topBarHeight = fontSmlHeight * 2;
 
     topBarPixmap = osd->CreatePixmap(1, cRect(0, 0, osdWidth, topBarHeight));
     topBarPixmap->Fill(clrTransparent);
@@ -87,10 +90,27 @@ void cFlatBaseRender::TopBarUpdate(void) {
         topBarUpdateTitle = false;
         topBarLastDate = curDate;
 
+        int fontTop = (topBarHeight - fontHeight) / 2;
         topBarPixmap->Fill(Theme.Color(clrTopBarBg));
-        topBarPixmap->DrawText(cPoint(marginItem, 0), topBarTitle, Theme.Color(clrTopBarFont), clrTransparent, font);
-        int width = font->Width(*curDate);
-        topBarPixmap->DrawText(cPoint(osdWidth - width, 0), curDate, Theme.Color(clrTopBarDateTimeFont), clrTransparent, font);
+        topBarPixmap->DrawText(cPoint(marginItem*2, fontTop), topBarTitle, Theme.Color(clrTopBarFont), Theme.Color(clrTopBarBg), font);
+        
+        time_t t;
+        time(&t);
+        
+        cString time = TimeString(t);
+        int timeWidth = font->Width(*time) + marginItem*2;
+        topBarPixmap->DrawText(cPoint(osdWidth - timeWidth, fontTop), time, Theme.Color(clrTopBarTimeFont), Theme.Color(clrTopBarBg), font);
+        
+        cString weekday = WeekDayNameFull(t);
+        int weekdayWidth = fontSml->Width(*weekday);
+        
+        cString date = ShortDateString(t);
+        int dateWidth = fontSml->Width(*date);
+
+        int fullWidth = max(weekdayWidth, dateWidth);
+        
+        topBarPixmap->DrawText(cPoint(osdWidth - timeWidth - fullWidth - marginItem*2, 0), weekday, Theme.Color(clrTopBarDateFont), Theme.Color(clrTopBarBg), fontSml, 0, taCenter);
+        topBarPixmap->DrawText(cPoint(osdWidth - timeWidth - fullWidth - marginItem*2, fontSmlHeight), date, Theme.Color(clrTopBarDateFont), Theme.Color(clrTopBarBg), fontSml, 0, taCenter);
     }
 }
 
@@ -109,24 +129,25 @@ void cFlatBaseRender::ButtonsSet(const char *Red, const char *Green, const char 
 
     int x = 0;
     buttonsPixmap->DrawText(cPoint(x, 0), Red, Theme.Color(clrButtonFont), Theme.Color(clrButtonBg), font, buttonWidth, 0, taCenter);
-    buttonsPixmap->DrawRectangle(cRect(x, fontHeight + 12, buttonWidth, 4), Theme.Color(clrButtonRed));
+    buttonsPixmap->DrawRectangle(cRect(x, fontHeight + 10, buttonWidth, 6), Theme.Color(clrButtonRed));
 
     x += buttonWidth + marginItem;
     buttonsPixmap->DrawText(cPoint(x, 0), Green, Theme.Color(clrButtonFont), Theme.Color(clrButtonBg), font, buttonWidth, 0, taCenter);
-    buttonsPixmap->DrawRectangle(cRect(x, fontHeight + 12, buttonWidth, 4), Theme.Color(clrButtonGreen));
+    buttonsPixmap->DrawRectangle(cRect(x, fontHeight + 10, buttonWidth, 6), Theme.Color(clrButtonGreen));
 
     x += buttonWidth + marginItem;
     buttonsPixmap->DrawText(cPoint(x, 0), Yellow, Theme.Color(clrButtonFont), Theme.Color(clrButtonBg), font, buttonWidth, 0, taCenter);
-    buttonsPixmap->DrawRectangle(cRect(x, fontHeight + 12, buttonWidth, 4), Theme.Color(clrButtonYellow));
+    buttonsPixmap->DrawRectangle(cRect(x, fontHeight + 10, buttonWidth, 6), Theme.Color(clrButtonYellow));
 
     x += buttonWidth + marginItem;
     buttonsPixmap->DrawText(cPoint(x, 0), Blue, Theme.Color(clrButtonFont), Theme.Color(clrButtonBg), font, buttonWidth, 0, taCenter);
-    buttonsPixmap->DrawRectangle(cRect(x, fontHeight + 12, buttonWidth, 4), Theme.Color(clrButtonBlue));
+    buttonsPixmap->DrawRectangle(cRect(x, fontHeight + 10, buttonWidth, 6), Theme.Color(clrButtonBlue));
 }
 
 void cFlatBaseRender::MessageCreate(void) {
     messageHeight = fontHeight;
-    messagePixmap = osd->CreatePixmap(2, cRect(0, osdHeight - messageHeight - 150, osdWidth, messageHeight));
+    int top = (osdHeight - messageHeight) / 2;
+    messagePixmap = osd->CreatePixmap(2, cRect(0, top, osdWidth, messageHeight));
     messagePixmap->Fill(clrTransparent);
 }
 
@@ -148,8 +169,8 @@ void cFlatBaseRender::MessageSet(eMessageType Type, const char *Text) {
     }
     messagePixmap->Fill(Theme.Color(clrMessageBg));
 
-    messagePixmap->DrawRectangle(cRect( 0, 0, 50, messageHeight), col);
-    messagePixmap->DrawRectangle(cRect( osdWidth - 50, 0, 50, messageHeight), col);
+    messagePixmap->DrawRectangle(cRect( 0, 0, messageHeight, messageHeight), col);
+    messagePixmap->DrawRectangle(cRect( osdWidth - messageHeight, 0, messageHeight, messageHeight), col);
 
     int textWidth = font->Width(Text);
     messagePixmap->DrawText(cPoint((osdWidth - textWidth) / 2, 0), Text, Theme.Color(clrMessageFont), Theme.Color(clrMessageBg), font);
