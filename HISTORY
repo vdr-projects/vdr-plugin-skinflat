@@ -1,6 +1,8 @@
 VDR Plugin 'skinflat' Revision History
 ---------------------------------------
 2013-XX-XX: Version 0.0.3
+- [update] display tracks margin, background color
+- [update] display volume margin
 - [update] top bar, 2 rows date, color
 - [update] color values
 - [update] channel display, separate color for following epg

@@ -36,7 +36,7 @@ void cFlatDisplayReplay::SetRecording(const cRecording *Recording) {
     else
         info = cString::sprintf("%s %s", *ShortDateString(Recording->Start()), *TimeString(Recording->Start()));
 
-    labelPixmap->DrawText(cPoint(0, fontHeight), info, Theme.Color(clrReplayFont), Theme.Color(clrReplayBg), fontSml, osdWidth);
+    labelPixmap->DrawText(cPoint(marginItem, fontHeight), info, Theme.Color(clrReplayFont), Theme.Color(clrReplayBg), fontSml, osdWidth);
 }
 
 void cFlatDisplayReplay::SetTitle(const char *Title) {
@@ -112,8 +112,8 @@ void cFlatDisplayReplay::SetTotal(const char *Total) {
 
 void cFlatDisplayReplay::UpdateInfo(void) {
     int right = osdWidth - font->Width(total);
-    labelPixmap->DrawText(cPoint(0, 0), current, Theme.Color(clrReplayFont), Theme.Color(clrReplayBg), font, font->Width(current), fontHeight);
-    labelPixmap->DrawText(cPoint(right, 0), total, Theme.Color(clrReplayFont), Theme.Color(clrReplayBg), font, font->Width(total), fontHeight);
+    labelPixmap->DrawText(cPoint(marginItem, 0), current, Theme.Color(clrReplayFont), Theme.Color(clrReplayBg), font, font->Width(current), fontHeight);
+    labelPixmap->DrawText(cPoint(right - marginItem, 0), total, Theme.Color(clrReplayFont), Theme.Color(clrReplayBg), font, font->Width(total), fontHeight);
 }
 
 void cFlatDisplayReplay::SetJump(const char *Jump) {

@@ -98,8 +98,10 @@ void cFlatBaseRender::TopBarUpdate(void) {
         time(&t);
         
         cString time = TimeString(t);
-        int timeWidth = font->Width(*time) + marginItem*2;
-        topBarPixmap->DrawText(cPoint(osdWidth - timeWidth, fontTop), time, Theme.Color(clrTopBarTimeFont), Theme.Color(clrTopBarBg), font);
+        cString time2 = cString::sprintf("%s %s", *time, tr("clock"));
+        
+        int timeWidth = font->Width(*time2) + marginItem*2;
+        topBarPixmap->DrawText(cPoint(osdWidth - timeWidth, fontTop), time2, Theme.Color(clrTopBarTimeFont), Theme.Color(clrTopBarBg), font);
         
         cString weekday = WeekDayNameFull(t);
         int weekdayWidth = fontSml->Width(*weekday);
@@ -109,8 +111,9 @@ void cFlatBaseRender::TopBarUpdate(void) {
 
         int fullWidth = max(weekdayWidth, dateWidth);
         
-        topBarPixmap->DrawText(cPoint(osdWidth - timeWidth - fullWidth - marginItem*2, 0), weekday, Theme.Color(clrTopBarDateFont), Theme.Color(clrTopBarBg), fontSml, 0, taCenter);
-        topBarPixmap->DrawText(cPoint(osdWidth - timeWidth - fullWidth - marginItem*2, fontSmlHeight), date, Theme.Color(clrTopBarDateFont), Theme.Color(clrTopBarBg), fontSml, 0, taCenter);
+        int fontSmlTop = (topBarHeight - fontSmlHeight*2) / 2;
+        topBarPixmap->DrawText(cPoint(osdWidth - timeWidth - fullWidth - marginItem*2, fontSmlTop), weekday, Theme.Color(clrTopBarDateFont), Theme.Color(clrTopBarBg), fontSml, 0, taCenter);
+        topBarPixmap->DrawText(cPoint(osdWidth - timeWidth - fullWidth - marginItem*2, fontSmlTop + fontSmlHeight), date, Theme.Color(clrTopBarDateFont), Theme.Color(clrTopBarBg), fontSml, 0, taCenter);
     }
 }
 
@@ -145,7 +148,7 @@ void cFlatBaseRender::ButtonsSet(const char *Red, const char *Green, const char 
 }
 
 void cFlatBaseRender::MessageCreate(void) {
-    messageHeight = fontHeight;
+    messageHeight = fontHeight + marginItem*2;
     int top = (osdHeight - messageHeight) / 2;
     messagePixmap = osd->CreatePixmap(2, cRect(0, top, osdWidth, messageHeight));
     messagePixmap->Fill(clrTransparent);
@@ -173,7 +176,7 @@ void cFlatBaseRender::MessageSet(eMessageType Type, const char *Text) {
     messagePixmap->DrawRectangle(cRect( osdWidth - messageHeight, 0, messageHeight, messageHeight), col);
 
     int textWidth = font->Width(Text);
-    messagePixmap->DrawText(cPoint((osdWidth - textWidth) / 2, 0), Text, Theme.Color(clrMessageFont), Theme.Color(clrMessageBg), font);
+    messagePixmap->DrawText(cPoint((osdWidth - textWidth) / 2, marginItem), Text, Theme.Color(clrMessageFont), Theme.Color(clrMessageBg), font);
 }
 
 void cFlatBaseRender::MessageClear(void) {
@@ -193,7 +196,7 @@ void cFlatBaseRender::ContentCreate(int Left, int Top, int Width, int Height) {
 }
 
 void cFlatBaseRender::ContentSet(const char *Text, tColor ColorFg, tColor ColorBg) {
-    contentWrapper.Set(Text, font, contentWidth);
+    contentWrapper.Set(Text, font, contentWidth - marginItem*2);
     contentColorFg = ColorFg;
     contentColorBg = ColorBg;
 
@@ -242,7 +245,7 @@ int cFlatBaseRender::ContentScrollOffset(void) {
 }
 
 int cFlatBaseRender::ContentVisibleLines(void) {
-    return (contentHeight / fontHeight);
+    return contentHeight / fontHeight;
 }
 
 bool cFlatBaseRender::ContentScroll(bool Up, bool Page) {
@@ -295,9 +298,8 @@ void cFlatBaseRender::contentDraw(void) {
     int linesText = contentWrapper.Lines();
     int currentHeight = 0;
     for (int i=0; i < linesText; i++) {
-        //printf("drawLine: %d %s\n", i, contentWrapper.GetLine(i));
         currentHeight = (i)*fontHeight;
-        contentPixmap->DrawText(cPoint(0, currentHeight), contentWrapper.GetLine(i), contentColorFg, contentColorBg, font, contentWidth);
+        contentPixmap->DrawText(cPoint(marginItem, currentHeight), contentWrapper.GetLine(i), contentColorFg, contentColorBg, font, contentWidth - marginItem*2);
     }
 }
 

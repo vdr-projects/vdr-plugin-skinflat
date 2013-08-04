@@ -7,9 +7,9 @@ cFlatDisplayTracks::cFlatDisplayTracks(const char *Title, int NumTracks, const c
 
     itemHeight = fontHeight + 2;
     currentIndex = -1;
-    maxItemWidth = font->Width(Title);
+    maxItemWidth = font->Width(Title) + marginItem*2;
     for (int i = 0; i < NumTracks; i++)
-        maxItemWidth = max(maxItemWidth, font->Width(Tracks[i]));
+        maxItemWidth = max(maxItemWidth, font->Width(Tracks[i]) + marginItem*2);
 
     int itemsHeight = NumTracks * itemHeight;
     int left = osdWidth - maxItemWidth;

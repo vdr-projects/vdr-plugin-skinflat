@@ -16,7 +16,7 @@ cFlatDisplayMenu::cFlatDisplayMenu(void) {
 
     menuPixmap = osd->CreatePixmap(1, cRect(0, topBarHeight + marginItem, menuWidth, scrollBarHeight ));
     
-    contentTop = topBarHeight + marginItem + fontHeight + (fontSmlHeight*2) + marginItem;
+    contentTop = topBarHeight + marginItem + fontHeight + (fontSmlHeight*2) + marginItem*3;
     ContentCreate(0, contentTop, menuWidth, scrollBarHeight - fontHeight*2 -3);
 
     scrollbarPixmap = osd->CreatePixmap(2, cRect(osdWidth - scrollBarWidth, scrollBarTop, scrollBarWidth, scrollBarHeight));
@@ -124,6 +124,8 @@ void cFlatDisplayMenu::SetEvent(const cEvent *Event) {
         return;
 
     menuPixmap->Fill(clrTransparent);
+    menuPixmap->DrawRectangle(cRect(0, 0, menuWidth, fontHeight + fontSmlHeight*2 + marginItem*2), Theme.Color(clrScrollbarBg));
+
     cString date = Event->GetDateString();
     cString startTime = Event->GetTimeString();
     cString endTime = Event->GetEndTimeString();
@@ -133,9 +135,9 @@ void cFlatDisplayMenu::SetEvent(const cEvent *Event) {
     cString title = Event->Title();
     cString shortText = Event->ShortText();
 
-    menuPixmap->DrawText(cPoint(0, 0), timeString, Theme.Color(clrMenuEventFontInfo), Theme.Color(clrMenuEventBg), fontSml, menuWidth);
-    menuPixmap->DrawText(cPoint(0, fontSmlHeight), title, Theme.Color(clrMenuEventFontTitle), Theme.Color(clrMenuEventBg), font, menuWidth);
-    menuPixmap->DrawText(cPoint(0, fontSmlHeight + fontHeight), shortText, Theme.Color(clrMenuEventFontInfo), Theme.Color(clrMenuEventBg), fontSml, menuWidth);
+    menuPixmap->DrawText(cPoint(marginItem, marginItem), timeString, Theme.Color(clrMenuEventFontInfo), Theme.Color(clrMenuEventBg), fontSml, menuWidth - marginItem*2);
+    menuPixmap->DrawText(cPoint(marginItem, marginItem + fontSmlHeight), title, Theme.Color(clrMenuEventFontTitle), Theme.Color(clrMenuEventBg), font, menuWidth - marginItem*2);
+    menuPixmap->DrawText(cPoint(marginItem, marginItem + fontSmlHeight + fontHeight), shortText, Theme.Color(clrMenuEventFontInfo), Theme.Color(clrMenuEventBg), fontSml, menuWidth - marginItem*2);
     
     ContentSet( Event->Description(), Theme.Color(clrMenuEventFontInfo), Theme.Color(clrMenuEventBg) );
     if( ContentScrollable() )
@@ -146,6 +148,7 @@ void cFlatDisplayMenu::SetRecording(const cRecording *Recording) {
     if( !Recording )
         return;
     menuPixmap->Fill(clrTransparent);
+    menuPixmap->DrawRectangle(cRect(0, 0, menuWidth, fontHeight + fontSmlHeight*2 + marginItem*2), Theme.Color(clrScrollbarBg));
 
     const cRecordingInfo *recInfo = Recording->Info();
     cString timeString = cString::sprintf("%s  %s  %s", *DateString(Recording->Start()), *TimeString(Recording->Start()), recInfo->ChannelName() ? recInfo->ChannelName() : "");
@@ -155,9 +158,9 @@ void cFlatDisplayMenu::SetRecording(const cRecording *Recording) {
         title = Recording->Name();
     cString shortText = recInfo->ShortText();
 
-    menuPixmap->DrawText(cPoint(0, 0), timeString, Theme.Color(clrMenuRecFontInfo), Theme.Color(clrMenuRecBg), fontSml, menuWidth);
-    menuPixmap->DrawText(cPoint(0, fontSmlHeight), title, Theme.Color(clrMenuRecFontTitle), Theme.Color(clrMenuRecBg), font, menuWidth);
-    menuPixmap->DrawText(cPoint(0, fontSmlHeight + fontHeight), shortText, Theme.Color(clrMenuRecFontInfo), Theme.Color(clrMenuRecBg), fontSml, menuWidth);
+    menuPixmap->DrawText(cPoint(marginItem, marginItem), timeString, Theme.Color(clrMenuRecFontInfo), Theme.Color(clrMenuRecBg), fontSml, menuWidth - marginItem*2);
+    menuPixmap->DrawText(cPoint(marginItem, marginItem + fontSmlHeight), title, Theme.Color(clrMenuRecFontTitle), Theme.Color(clrMenuRecBg), font, menuWidth - marginItem*2);
+    menuPixmap->DrawText(cPoint(marginItem, marginItem + fontSmlHeight + fontHeight), shortText, Theme.Color(clrMenuRecFontInfo), Theme.Color(clrMenuRecBg), fontSml, menuWidth - marginItem*2);
 
     ContentSet( recInfo->Description(), Theme.Color(clrMenuRecFontInfo), Theme.Color(clrMenuRecBg) );
     if( ContentScrollable() )

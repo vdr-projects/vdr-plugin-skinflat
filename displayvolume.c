@@ -3,7 +3,7 @@
 cFlatDisplayVolume::cFlatDisplayVolume(void) {
     muted = false;
 
-    labelHeight = fontHeight;
+    labelHeight = fontHeight + marginItem*2;
 
     CreateFullOsd();
     TopBarCreate();
@@ -28,17 +28,19 @@ void cFlatDisplayVolume::SetVolume(int Current, int Total, bool Mute) {
     
     cString label = cString::sprintf("%s: %d", tr("Volume"), Current);
     cString maxLabel = cString::sprintf("%s: %d", tr("Volume"), 555);
-    int maxlabelWidth = font->Width(maxLabel);
+    int maxlabelWidth = font->Width(maxLabel) + marginItem;
     int left = osdWidth / 2 - maxlabelWidth / 2;
 
+    labelPixmap->DrawRectangle(cRect(left - marginItem, marginItem, marginItem, fontHeight), Theme.Color(clrVolumeBg));
+    
     if (Mute) {
-        labelPixmap->DrawText(cPoint(left, 0), *label, Theme.Color(clrVolumeFont), Theme.Color(clrVolumeBg),
-            font, maxlabelWidth + marginItem*2 + labelHeight, fontHeight, taLeft);
-        if( imgLoader.LoadIcon("mute", labelHeight, labelHeight) ) {
-            muteLogoPixmap->DrawImage( cPoint(left + maxlabelWidth + marginItem, 0), imgLoader.GetImage() );
+        labelPixmap->DrawText(cPoint(left, marginItem), *label, Theme.Color(clrVolumeFont), Theme.Color(clrVolumeBg),
+            font, maxlabelWidth + marginItem + labelHeight, fontHeight, taLeft);
+        if( imgLoader.LoadIcon("mute", fontHeight, fontHeight) ) {
+            muteLogoPixmap->DrawImage( cPoint(left + maxlabelWidth + marginItem, marginItem), imgLoader.GetImage() );
         }
     } else {
-        labelPixmap->DrawText(cPoint(left, 0), *label, Theme.Color(clrVolumeFont), Theme.Color(clrVolumeBg),
+        labelPixmap->DrawText(cPoint(left, marginItem), *label, Theme.Color(clrVolumeFont), Theme.Color(clrVolumeBg),
             font, maxlabelWidth, fontHeight, taLeft);
     }
     ProgressBarDraw(Current, Total);
