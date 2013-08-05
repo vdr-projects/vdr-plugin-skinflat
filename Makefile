@@ -58,7 +58,7 @@ LIBS += $(shell pkg-config --libs Magick++)
 
 ### The object files (add further files here):
 
-OBJS = imageloader.o baserender.o displaychannel.o displaymenu.o displaymessage.o \
+OBJS = config.o imageloader.o baserender.o displaychannel.o displaymenu.o displaymessage.o \
 	   displayreplay.o displaytracks.o displayvolume.o flat.o $(PLUGIN).o
 
 ### The main target:

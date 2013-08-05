@@ -51,15 +51,31 @@ cPluginFlat::~cPluginFlat() {
 }
 
 const char *cPluginFlat::CommandLineHelp(void) {
-    return ""; 
+    return "  -l <LOGOPATH>, --logopath=<LOGOPATH>       Set directory where Channel Logos are stored.\n"; 
 }
 
 bool cPluginFlat::ProcessArgs(int argc, char *argv[]) {
     // Implement command line argument processing here if applicable.
+    static const struct option long_options[] = {
+        { "logopath", required_argument, NULL, 'l' },
+        { NULL }
+    };
+
+    int c;
+    while ((c = getopt_long(argc, argv, "l:", long_options, NULL)) != -1) {
+        switch (c) {
+            case 'l':
+                Config.SetLogoPath(cString(optarg));
+                break;
+            default:
+                return false;
+        }
+    }
     return true;
 }
 
 bool cPluginFlat::Initialize(void) {
+    Config.Init();
     return true;
 }
 

@@ -10,6 +10,7 @@
 #include "displaytracks.h"
 #include "displayvolume.h"
 
+class cFlatConfig Config;
 
 cTheme Theme;
 static bool menuActive = false;

@@ -1,6 +1,7 @@
 VDR Plugin 'skinflat' Revision History
 ---------------------------------------
 2013-XX-XX: Version 0.0.3
+- [add] parameter to set channel logos path
 - [update] display tracks margin, background color
 - [update] display volume margin
 - [update] top bar, 2 rows date, color
