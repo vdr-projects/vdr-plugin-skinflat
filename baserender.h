@@ -29,7 +29,7 @@ class cFlatBaseRender
         // Progressbar
         cPixmap *progressBarPixmap;
         int progressBarHeight, progressBarTop, progressBarWidth;
-        tColor progressBarColorFg, progressBarColorBarFg, progressBarColorBg;
+        tColor progressBarColorFg, progressBarColorBarFg, progressBarColorBarCurFg, progressBarColorBg;
         tColor progressBarColorMark, progressBarColorMarkCurrent;
         
         // Buttons rot, grün, gelb, blau

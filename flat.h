@@ -49,8 +49,8 @@ THEME_CLR(Theme, clrChannelBg,              0xCC101010);
 THEME_CLR(Theme, clrChannelFontTitle,       0xFF3090B0);
 THEME_CLR(Theme, clrChannelFontEpg,         0xFFEEEEEE);
 THEME_CLR(Theme, clrChannelFontEpgFollow,   0xFFA0A0A0);
-THEME_CLR(Theme, clrChannelProgressFg,      0xFFEEEEEE);
-THEME_CLR(Theme, clrChannelProgressBarFg,   0xFFEEEEEE);
+THEME_CLR(Theme, clrChannelProgressFg,      0xFF3090B0);
+THEME_CLR(Theme, clrChannelProgressBarFg,   0xFF3090B0);
 THEME_CLR(Theme, clrChannelProgressBg,      0xCC101010);
 
 // Menu
@@ -60,8 +60,8 @@ THEME_CLR(Theme, clrItemCurrentBg,          0xCC3090B0);
 THEME_CLR(Theme, clrItemCurrentFont,        0xFFEEEEEE);
 THEME_CLR(Theme, clrItemSelableBg,          0xCC101010);
 THEME_CLR(Theme, clrItemSelableFont,        0xFFEEEEEE);
-THEME_CLR(Theme, clrScrollbarFg,            0xFFEEEEEE);
-THEME_CLR(Theme, clrScrollbarBarFg,         0xFFEEEEEE);
+THEME_CLR(Theme, clrScrollbarFg,            0xFF3090B0);
+THEME_CLR(Theme, clrScrollbarBarFg,         0xFF3090B0);
 THEME_CLR(Theme, clrScrollbarBg,            0xCC101010);
 // Menu Event
 THEME_CLR(Theme, clrMenuEventBg,            0xCC101010);
@@ -78,8 +78,10 @@ THEME_CLR(Theme, clrMenuTextFont,           0xFFEEEEEE);
 // Replay
 THEME_CLR(Theme, clrReplayBg,               0xCC101010);
 THEME_CLR(Theme, clrReplayFont,             0xFFEEEEEE);
+THEME_CLR(Theme, clrReplayFontSpeed,        0xFF3090B0);
 THEME_CLR(Theme, clrReplayProgressFg,       0xFFEEEEEE);
 THEME_CLR(Theme, clrReplayProgressBarFg,    0xFFEEEEEE);
+THEME_CLR(Theme, clrReplayProgressBarCurFg, 0xFF3090B0);
 THEME_CLR(Theme, clrReplayProgressBg,       0xCC101010);
 THEME_CLR(Theme, clrReplayMarkFg,           0xFFEEEEEE);
 THEME_CLR(Theme, clrReplayMarkCurrentFg,    0xFF3090B0);
@@ -93,8 +95,8 @@ THEME_CLR(Theme, clrTrackItemCurrentFont,   0xFFEEEEEE);
 // Volume
 THEME_CLR(Theme, clrVolumeBg,               0xCC101010);
 THEME_CLR(Theme, clrVolumeFont,             0xFFEEEEEE);
-THEME_CLR(Theme, clrVolumeProgressFg,       0xFFEEEEEE);
-THEME_CLR(Theme, clrVolumeProgressBarFg,    0xFFEEEEEE);
+THEME_CLR(Theme, clrVolumeProgressFg,       0xFF3090B0);
+THEME_CLR(Theme, clrVolumeProgressBarFg,    0xFF3090B0);
 THEME_CLR(Theme, clrVolumeProgressBg,       0xCC101010);
 
 class cFlat : public cSkin {

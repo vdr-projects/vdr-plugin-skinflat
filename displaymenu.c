@@ -9,7 +9,7 @@ cFlatDisplayMenu::cFlatDisplayMenu(void) {
     itemHeight = fontHeight + 2;
 
     scrollBarWidth = 20;
-    scrollBarHeight = osdHeight - (topBarHeight + buttonsHeight + marginItem*2 );
+    scrollBarHeight = osdHeight - (topBarHeight + buttonsHeight + marginItem*3 );
     scrollBarTop = topBarHeight + marginItem;
 
     menuWidth = osdWidth - scrollBarWidth;
@@ -17,7 +17,7 @@ cFlatDisplayMenu::cFlatDisplayMenu(void) {
     menuPixmap = osd->CreatePixmap(1, cRect(0, topBarHeight + marginItem, menuWidth, scrollBarHeight ));
     
     contentTop = topBarHeight + marginItem + fontHeight + (fontSmlHeight*2) + marginItem*3;
-    ContentCreate(0, contentTop, menuWidth, scrollBarHeight - fontHeight*2 -3);
+    ContentCreate(0, contentTop, menuWidth, scrollBarHeight - fontHeight - fontSmlHeight*2 - marginItem);
 
     scrollbarPixmap = osd->CreatePixmap(2, cRect(osdWidth - scrollBarWidth, scrollBarTop, scrollBarWidth, scrollBarHeight));
 

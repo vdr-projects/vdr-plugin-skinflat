@@ -12,10 +12,10 @@ cFlatDisplayReplay::cFlatDisplayReplay(bool ModeOnly) {
     labelPixmap = osd->CreatePixmap(1, cRect(0, osdHeight - labelHeight, osdWidth, labelHeight));
     iconsPixmap = osd->CreatePixmap(2, cRect(0, osdHeight - labelHeight, osdWidth, labelHeight));
     
-    ProgressBarCreate(0, osdHeight - labelHeight - ProgressBarHeight() - marginItem, osdWidth,
+    ProgressBarCreate(0, osdHeight - labelHeight - ProgressBarHeight(), osdWidth,
         Theme.Color(clrReplayProgressFg), Theme.Color(clrReplayProgressBarFg), Theme.Color(clrReplayProgressBg));
 
-    labelJump = osd->CreatePixmap(1, cRect(0, osdHeight - labelHeight - ProgressBarHeight() - marginItem*2 - fontHeight, osdWidth, fontHeight));
+    labelJump = osd->CreatePixmap(1, cRect(0, osdHeight - labelHeight - ProgressBarHeight() - marginItem - fontHeight, osdWidth, fontHeight));
     
     labelPixmap->Fill(Theme.Color(clrReplayBg));
     labelJump->Fill(clrTransparent);
@@ -74,13 +74,13 @@ void cFlatDisplayReplay::SetMode(bool Play, bool Forward, int Speed) {
                 pause = "pause";
                 play = "play";
                 forward = "forward_sel";
-                labelPixmap->DrawText(cPoint(left + fontHeight*4 + marginItem*4, 0), speed, Theme.Color(clrReplayFont), Theme.Color(clrReplayBg), font);
+                labelPixmap->DrawText(cPoint(left + fontHeight*4 + marginItem*4, 0), speed, Theme.Color(clrReplayFontSpeed), Theme.Color(clrReplayBg), font);
             } else {
                 rewind = "rewind_sel";
                 pause = "pause";
                 play = "play";
                 forward = "forward";
-                labelPixmap->DrawText(cPoint(left - font->Width(speed) - marginItem, 0), speed, Theme.Color(clrReplayFont), Theme.Color(clrReplayBg), font);
+                labelPixmap->DrawText(cPoint(left - font->Width(speed) - marginItem, 0), speed, Theme.Color(clrReplayFontSpeed), Theme.Color(clrReplayBg), font);
             }                
         }
 
