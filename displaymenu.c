@@ -38,8 +38,8 @@ void cFlatDisplayMenu::DrawScrollbar(int Total, int Offset, int Shown, int Top, 
         scrollbarPixmap->Fill(clrTransparent);
         scrollbarPixmap->DrawRectangle(cRect(5, Top, scrollBarWidth-5, Height), Theme.Color(clrScrollbarBg));
 
-        scrollbarPixmap->DrawRectangle(cRect(15, Top, 2, Height), Theme.Color(clrScrollbarFg));
-        scrollbarPixmap->DrawRectangle(cRect(15, scrollTop, 5, scrollHeight), Theme.Color(clrScrollbarBarFg));
+        scrollbarPixmap->DrawRectangle(cRect(10, Top, 2, Height), Theme.Color(clrScrollbarFg));
+        scrollbarPixmap->DrawRectangle(cRect(10, scrollTop, 8, scrollHeight), Theme.Color(clrScrollbarBarFg));
     }
 }
 
