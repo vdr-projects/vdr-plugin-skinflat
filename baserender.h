@@ -22,6 +22,7 @@ class cFlatBaseRender
         // TopBar
         cPixmap *topBarPixmap;
         cString topBarTitle;
+        cString tobBarTitleExtra1, tobBarTitleExtra2;
         bool topBarUpdateTitle;
         cString topBarLastDate;
         int topBarHeight;
@@ -66,6 +67,7 @@ class cFlatBaseRender
 
         void TopBarCreate(void);
         void TopBarSetTitle(cString title);
+        void TopBarSetTitleExtra(cString extra1, cString extra2);
         void TopBarUpdate(void);
 
         void ButtonsCreate(void);

@@ -23,11 +23,17 @@ cFlatDisplayMenu::cFlatDisplayMenu(void) {
 
     menuPixmap->Fill(clrTransparent);
     scrollbarPixmap->Fill(clrTransparent);
+    
+    menuCategory = mcUndefined;
 }
 
 cFlatDisplayMenu::~cFlatDisplayMenu() {
     osd->DestroyPixmap(menuPixmap);
     osd->DestroyPixmap(scrollbarPixmap);
+}
+
+void cFlatDisplayMenu::SetMenuCategory(eMenuCategory MenuCategory) {
+    menuCategory = MenuCategory;
 }
 
 void cFlatDisplayMenu::DrawScrollbar(int Total, int Offset, int Shown, int Top, int Height, bool CanScrollUp, bool CanScrollDown) {
@@ -76,7 +82,17 @@ void cFlatDisplayMenu::Clear(void) {
 }
 
 void cFlatDisplayMenu::SetTitle(const char *Title) {
-    TopBarSetTitle(Title);
+    if( menuCategory == mcRecording || menuCategory == mcTimer ) {
+        cVideoDiskUsage::HasChanged(VideoDiskUsageState);
+        int DiskUsage = cVideoDiskUsage::UsedPercent();
+        int FreeGB = cVideoDiskUsage::FreeMB() / 1024;
+        cString extra1 = cString::sprintf("%s: %d%%", tr("disk usage"), DiskUsage);
+        cString extra2 = cString::sprintf("%s: %d GB", tr("free space"), FreeGB);
+
+        TopBarSetTitle(Title);
+        TopBarSetTitleExtra(extra1, extra2);
+    } else
+        TopBarSetTitle(Title);
 }
 
 void cFlatDisplayMenu::SetButtons(const char *Red, const char *Green, const char *Yellow, const char *Blue) {

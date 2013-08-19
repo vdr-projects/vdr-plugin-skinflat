@@ -8,6 +8,9 @@ class cFlatDisplayMenu : public cFlatBaseRender,  public cSkinDisplayMenu {
         cPixmap *menuPixmap;
         int menuWidth;
 
+        eMenuCategory menuCategory;
+        int VideoDiskUsageState = -1;
+    
         int contentTop;
     
         cPixmap *scrollbarPixmap;
@@ -24,7 +27,7 @@ class cFlatDisplayMenu : public cFlatBaseRender,  public cSkinDisplayMenu {
         virtual int MaxItems(void);
         virtual void Clear(void);
         
-        //virtual void SetMenuCategory(eMenuCategory MenuCategory);
+        virtual void SetMenuCategory(eMenuCategory MenuCategory);
         //virtual void SetTabs(int Tab1, int Tab2 = 0, int Tab3 = 0, int Tab4 = 0, int Tab5 = 0);
     
         virtual void SetTitle(const char *Title);

@@ -1,6 +1,9 @@
 VDR Plugin 'skinflat' Revision History
 ---------------------------------------
 
+2013-XX-XX: Version 0.1.1
+- [add] show disk usage in topbar @ menu recordings & timer
+
 2013-09-08: Version 0.1.0
 - [add] parameter to set channel logos path (-l --logo)
 - [add] 3 new themes - green, gold, red (include icons)

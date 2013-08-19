@@ -10,6 +10,8 @@ cFlatBaseRender::cFlatBaseRender(void) {
     fontSmlHeight = fontSml->Height();
 
     topBarTitle = "";
+    tobBarTitleExtra1 = ""; 
+    tobBarTitleExtra2 = ""; 
     topBarLastDate = "";
     topBarUpdateTitle = false;
     topBarHeight = 0;
@@ -83,6 +85,12 @@ void cFlatBaseRender::TopBarSetTitle(cString title) {
     topBarUpdateTitle = true;
 }
 
+void cFlatBaseRender::TopBarSetTitleExtra(cString extra1, cString extra2) {
+    tobBarTitleExtra1 = extra1;
+    tobBarTitleExtra2 = extra2;
+    topBarUpdateTitle = true;
+}
+
 // sollte bei jedum "Flush" aufgerufen werden!
 void cFlatBaseRender::TopBarUpdate(void) {
     cString curDate = DayDateTime();
@@ -91,27 +99,36 @@ void cFlatBaseRender::TopBarUpdate(void) {
         topBarLastDate = curDate;
 
         int fontTop = (topBarHeight - fontHeight) / 2;
+        int fontSmlTop = (topBarHeight - fontSmlHeight*2) / 2;
+
         topBarPixmap->Fill(Theme.Color(clrTopBarBg));
         topBarPixmap->DrawText(cPoint(marginItem*2, fontTop), topBarTitle, Theme.Color(clrTopBarFont), Theme.Color(clrTopBarBg), font);
+
+        int extra1Width = fontSml->Width(tobBarTitleExtra1);
+        int extra2Width = fontSml->Width(tobBarTitleExtra2);
+        int extraMaxWidth = max(extra1Width, extra2Width);
         
+        int extraLeft = osdWidth/2 - extraMaxWidth/2;
+        topBarPixmap->DrawText(cPoint(extraLeft, fontSmlTop), tobBarTitleExtra1, Theme.Color(clrTopBarDateFont), Theme.Color(clrTopBarBg), fontSml, extraMaxWidth);
+        topBarPixmap->DrawText(cPoint(extraLeft, fontSmlTop + fontSmlHeight), tobBarTitleExtra2, Theme.Color(clrTopBarDateFont), Theme.Color(clrTopBarBg), fontSml, extraMaxWidth);
+
         time_t t;
         time(&t);
-        
+
         cString time = TimeString(t);
         cString time2 = cString::sprintf("%s %s", *time, tr("clock"));
-        
+
         int timeWidth = font->Width(*time2) + marginItem*2;
         topBarPixmap->DrawText(cPoint(osdWidth - timeWidth, fontTop), time2, Theme.Color(clrTopBarTimeFont), Theme.Color(clrTopBarBg), font);
-        
+
         cString weekday = WeekDayNameFull(t);
         int weekdayWidth = fontSml->Width(*weekday);
-        
+
         cString date = ShortDateString(t);
         int dateWidth = fontSml->Width(*date);
 
         int fullWidth = max(weekdayWidth, dateWidth);
-        
-        int fontSmlTop = (topBarHeight - fontSmlHeight*2) / 2;
+
         topBarPixmap->DrawText(cPoint(osdWidth - timeWidth - fullWidth - marginItem*2, fontSmlTop), weekday, Theme.Color(clrTopBarDateFont), Theme.Color(clrTopBarBg), fontSml, fullWidth, 0, taCenter);
         topBarPixmap->DrawText(cPoint(osdWidth - timeWidth - fullWidth - marginItem*2, fontSmlTop + fontSmlHeight), date, Theme.Color(clrTopBarDateFont), Theme.Color(clrTopBarBg), fontSml, fullWidth, 0, taCenter);
     }
