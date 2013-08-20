@@ -244,16 +244,6 @@ bool cFlatDisplayMenu::SetItemChannel(const cChannel *Channel, int Index, bool C
         menuPixmap->DrawText(cPoint(marginItem, y), buffer, ColorFg, ColorBg, font);
     }
 
-    for (int i = 0; i < MaxTabs; i++)
-    {
-        const char *s = GetTabbedText(buffer, i);
-        if (s) {
-            int xt = Tab(i);
-        }
-        if (!Tab(i + 1))
-            break;
-    }
-
     return true;
 }
 

@@ -166,7 +166,7 @@ void cFlatBaseRender::ButtonsSet(const char *Red, const char *Green, const char 
 
 void cFlatBaseRender::MessageCreate(void) {
     messageHeight = fontHeight + marginItem*2;
-    int top = (osdHeight - messageHeight) / 2;
+    int top = osdHeight - osdHeight/5 - messageHeight;
     messagePixmap = osd->CreatePixmap(2, cRect(0, top, osdWidth, messageHeight));
     messagePixmap->Fill(clrTransparent);
 }
@@ -367,8 +367,7 @@ int cFlatBaseRender::ProgressBarHeight(void) {
 void cFlatBaseRender::ProgressBarDrawMarks(int Current, int Total, const cMarks *Marks, tColor Color, tColor ColorCurrent) {
     progressBarColorMark = Color;
     progressBarColorMarkCurrent = ColorCurrent;
-    int posMark = 0, posMarkLast = 0;
-    int posCurrent;
+    int posMark = 0, posMarkLast = 0, posCurrent = 0;
     
     int top = progressBarHeight / 2;
     progressBarPixmap->Fill( progressBarColorBg );
