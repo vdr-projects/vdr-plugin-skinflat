@@ -6,6 +6,8 @@ cFlatDisplayMenu::cFlatDisplayMenu(void) {
     ButtonsCreate();
     MessageCreate();
 
+    VideoDiskUsageState = -1;
+
     itemHeight = fontHeight + 2;
     itemChannelHeight = fontHeight + 2;
     

@@ -9,7 +9,7 @@ class cFlatDisplayMenu : public cFlatBaseRender,  public cSkinDisplayMenu {
         int menuTop, menuWidth;
 
         eMenuCategory menuCategory;
-        int VideoDiskUsageState = -1;
+        int VideoDiskUsageState;
     
         int contentTop;
     
