@@ -196,6 +196,17 @@ bool cFlatDisplayMenu::SetItemChannel(const cChannel *Channel, int Index, bool C
                 int w = (menuWidth / 10 * 3) - marginItem;
                 menuPixmap->DrawText(cPoint(marginItem + xt, y), s2, ColorFg, ColorBg, font, w);
             }
+            
+            menuPixmap->DrawRectangle(cRect( (menuWidth/10*3) + marginItem, y, marginItem, fontHeight), ColorBg);
+            
+            if( Current )
+                ProgressBarDrawInline(menuPixmap, (menuWidth/10*3) + marginItem*2, y, menuWidth/10 - marginItem, fontHeight,
+                    progress, 100, Theme.Color(clrMenuItemChanCurProgressFg), Theme.Color(clrMenuItemChanCurProgressBarFg),
+                    Theme.Color(clrMenuItemChanCurProgressBg));
+            else
+                ProgressBarDrawInline(menuPixmap, (menuWidth/10*3) + marginItem*2, y, menuWidth/10 - marginItem, fontHeight,
+                    progress, 100, Theme.Color(clrMenuItemChanProgressFg), Theme.Color(clrMenuItemChanProgressBarFg),
+                    Theme.Color(clrMenuItemChanProgressBg));
 /*
             int progressTop = menuTop + y + (fontHeight / 2) - ProgressBarHeight() / 2;
             ProgressBarCreate((menuWidth / 10 * 3) + marginItem, progressTop, menuWidth / 10,

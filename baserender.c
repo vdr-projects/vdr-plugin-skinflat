@@ -320,6 +320,20 @@ void cFlatBaseRender::contentDraw(void) {
     }
 }
 
+void cFlatBaseRender::ProgressBarDrawInline(cPixmap *Pixmap, int Left, int Top, int Width, int Height, int Current, int Total, tColor ColorFg, tColor ColorBarFg, tColor ColorBg) {
+    int Middle = Top + Height/2;
+    double percentLeft = ((double)Current) / (double)Total;
+
+    // background
+    Pixmap->DrawRectangle(cRect( Left, Top, Width, Height), ColorBg);
+
+    // small line
+    Pixmap->DrawRectangle(cRect( Left, Middle-1, Width, 2), ColorFg);
+
+    if (Current > 0)
+        Pixmap->DrawRectangle(cRect( Left, Middle - 4, (Width * percentLeft), 8), ColorBarFg);
+}
+
 void cFlatBaseRender::ProgressBarCreate(int Left, int Top, int Width, tColor ColorFg, tColor ColorBarFg, tColor ColorBg) {
     progressBarTop = Top;
     progressBarWidth = Width;

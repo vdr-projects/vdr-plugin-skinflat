@@ -81,6 +81,7 @@ class cFlatBaseRender
         void ProgressBarDraw(int Current, int Total);
         int ProgressBarHeight(void);
         void ProgressBarDrawMarks(int Current, int Total, const cMarks *Marks, tColor Color, tColor ColorCurrent);
+        void ProgressBarDrawInline(cPixmap *Pixmap, int Left, int Top, int Width, int Height, int Current, int Total, tColor ColorFg, tColor ColorBarFg, tColor ColorBg);        
         
         void ContentCreate(int Left, int Top, int Width, int Height);
         void ContentSet(const char *Text, tColor ColorFg, tColor ColorBg);
