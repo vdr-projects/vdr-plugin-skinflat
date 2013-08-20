@@ -7,14 +7,15 @@ cFlatDisplayMenu::cFlatDisplayMenu(void) {
     MessageCreate();
 
     itemHeight = fontHeight + 2;
-
+    itemChannelHeight = fontHeight + 2;
+    
     scrollBarWidth = 20;
     scrollBarHeight = osdHeight - (topBarHeight + buttonsHeight + marginItem*3 );
     scrollBarTop = topBarHeight + marginItem;
 
     menuWidth = osdWidth - scrollBarWidth;
-
-    menuPixmap = osd->CreatePixmap(1, cRect(0, topBarHeight + marginItem, menuWidth, scrollBarHeight ));
+    menuTop = topBarHeight + marginItem;
+    menuPixmap = osd->CreatePixmap(1, cRect(0, menuTop, menuWidth, scrollBarHeight ));
     
     contentTop = topBarHeight + marginItem + fontHeight + (fontSmlHeight*2) + marginItem*3;
     ContentCreate(0, contentTop, menuWidth, scrollBarHeight - fontHeight - fontSmlHeight*2 - marginItem);
@@ -68,12 +69,19 @@ void cFlatDisplayMenu::Scroll(bool Up, bool Page) {
 }
 
 int cFlatDisplayMenu::MaxItems(void) {
+    if( menuCategory == mcChannel )
+        return scrollBarHeight / itemChannelHeight;
+
     return scrollBarHeight / itemHeight;
 }
 
 int cFlatDisplayMenu::ItemsHeight(void) {
+    if( menuCategory == mcChannel )
+        return MaxItems() * itemChannelHeight;
+
     return MaxItems() * itemHeight;
 }
+
 void cFlatDisplayMenu::Clear(void) {
     textScroller.Reset();
     menuPixmap->Fill(clrTransparent);
@@ -133,6 +141,107 @@ void cFlatDisplayMenu::SetItem(const char *Text, int Index, bool Current, bool S
         if (!Tab(i + 1))
             break;
     }
+}
+
+bool cFlatDisplayMenu::SetItemChannel(const cChannel *Channel, int Index, bool Current, bool Selectable, bool WithProvider) {
+    cSchedulesLock schedulesLock;
+    const cSchedules *schedules = cSchedules::Schedules(schedulesLock);
+
+    cString buffer;
+    int y = Index * itemChannelHeight;
+    
+    tColor ColorFg, ColorBg;
+    if (Current) {
+        ColorFg = Theme.Color(clrItemCurrentFont);
+        ColorBg = Theme.Color(clrItemCurrentBg);
+    }
+    else {
+        if( Selectable ) {
+            ColorFg = Theme.Color(clrItemSelableFont);
+            ColorBg = Theme.Color(clrItemSelableBg);
+        } else {
+            ColorFg = Theme.Color(clrItemFont);
+            ColorBg = Theme.Color(clrItemBg);
+        }
+    }
+    menuPixmap->DrawRectangle(cRect(0, y, menuWidth, itemChannelHeight - 2), ColorBg);
+    
+    // event from channel
+    const cSchedule *Schedule = schedules->GetSchedule( Channel->GetChannelID() );
+    if( Schedule ) {
+        const cEvent *Event = Schedule->GetPresentEvent();
+        if( Event ) {
+            // calculate progress bar
+            float progress = (int)roundf( (float)(time(NULL) - Event->StartTime()) / (float) (Event->Duration()) * 100.0);
+            if(progress < 0)
+                progress = 0.;
+            else if(progress > 100)
+                progress = 100;
+
+            if( WithProvider )
+                buffer = cString::sprintf("%d\t%s - %s", Channel->Number(), Channel->Provider(), Channel->Name());
+            else
+                buffer = cString::sprintf("%d\t%s", Channel->Number(), Channel->Name());
+
+            const char *s1 = GetTabbedText(buffer, 0);
+            if( s1 ) {
+                int xt = Tab(0);
+                menuPixmap->DrawText(cPoint(marginItem + xt, y), s1, ColorFg, ColorBg, font);
+            }
+            const char *s2 = GetTabbedText(buffer, 1);
+            if( s2 ) {
+                int xt = Tab(1);
+                int w = (menuWidth / 10 * 3) - marginItem;
+                menuPixmap->DrawText(cPoint(marginItem + xt, y), s2, ColorFg, ColorBg, font, w);
+            }
+/*
+            int progressTop = menuTop + y + (fontHeight / 2) - ProgressBarHeight() / 2;
+            ProgressBarCreate((menuWidth / 10 * 3) + marginItem, progressTop, menuWidth / 10,
+                Theme.Color(clrChannelProgressFg), Theme.Color(clrChannelProgressBarFg), clrTransparent);
+            ProgressBarDraw(progress, 100);
+*/
+            menuPixmap->DrawText(cPoint((menuWidth / 10 * 4) + marginItem*2, y), Event->Title(), ColorFg, ColorBg, font);
+            
+            return true;
+        }
+    }
+
+    // without schedule, do it like vdr
+    if (!Channel->GroupSep()) {
+        if( WithProvider )
+            buffer = cString::sprintf("%d\t%s - %s", Channel->Number(), Channel->Provider(), Channel->Name());
+        else
+            buffer = cString::sprintf("%d\t%s", Channel->Number(), Channel->Name());
+
+        const char *s1 = GetTabbedText(buffer, 0);
+        if( s1 ) {
+            int xt = Tab(0);
+            menuPixmap->DrawText(cPoint(marginItem + xt, y), s1, ColorFg, ColorBg, font);
+        }
+        const char *s2 = GetTabbedText(buffer, 1);
+        if( s2 ) {
+            int xt = Tab(1);
+            int w = (menuWidth / 10 * 3) - marginItem;
+
+            menuPixmap->DrawText(cPoint(marginItem + xt, y), s2, ColorFg, ColorBg, font, w);
+        }
+    }
+    else {
+        buffer = cString::sprintf("---%s ----------------------------------------------------------------", Channel->Name());
+        menuPixmap->DrawText(cPoint(marginItem, y), buffer, ColorFg, ColorBg, font);
+    }
+
+    for (int i = 0; i < MaxTabs; i++)
+    {
+        const char *s = GetTabbedText(buffer, i);
+        if (s) {
+            int xt = Tab(i);
+        }
+        if (!Tab(i + 1))
+            break;
+    }
+
+    return true;
 }
 
 void cFlatDisplayMenu::SetEvent(const cEvent *Event) {

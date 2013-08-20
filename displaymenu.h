@@ -6,7 +6,7 @@ class cFlatDisplayMenu : public cFlatBaseRender,  public cSkinDisplayMenu {
     private:
 
         cPixmap *menuPixmap;
-        int menuWidth;
+        int menuTop, menuWidth;
 
         eMenuCategory menuCategory;
         int VideoDiskUsageState = -1;
@@ -16,7 +16,7 @@ class cFlatDisplayMenu : public cFlatBaseRender,  public cSkinDisplayMenu {
         cPixmap *scrollbarPixmap;
         int scrollBarTop, scrollBarWidth, scrollBarHeight;
 
-        int itemHeight;
+        int itemHeight, itemChannelHeight;
 
         void DrawScrollbar(int Total, int Offset, int Shown, int Top, int Height, bool CanScrollUp, bool CanScrollDown);
         int ItemsHeight(void);
@@ -37,7 +37,7 @@ class cFlatDisplayMenu : public cFlatBaseRender,  public cSkinDisplayMenu {
         
         //virtual bool SetItemEvent(const cEvent *Event, int Index, bool Current, bool Selectable, const cChannel *Channel, bool WithDate, eTimerMatch TimerMatch);
         //virtual bool SetItemTimer(const cTimer *Timer, int Index, bool Current, bool Selectable);
-        //virtual bool SetItemChannel(const cChannel *Channel, int Index, bool Current, bool Selectable, bool WithProvider);
+        virtual bool SetItemChannel(const cChannel *Channel, int Index, bool Current, bool Selectable, bool WithProvider);
         //virtual bool SetItemRecording(const cRecording *Recording, int Index, bool Current, bool Selectable, int Level, int Total, int New);
 
         virtual void SetScrollbar(int Total, int Offset);
