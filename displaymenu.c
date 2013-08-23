@@ -57,7 +57,7 @@ void cFlatDisplayMenu::SetScrollbar(int Total, int Offset) {
 }
 
 void cFlatDisplayMenu::Scroll(bool Up, bool Page) {
-    // Wird das Menü gescrollt oder Content?
+    // Wird das MenÃ¼ gescrollt oder Content?
     if( ContentIsShown() )
     {
         bool scrolled = ContentScroll(Up, Page);
@@ -145,6 +145,7 @@ void cFlatDisplayMenu::SetItem(const char *Text, int Index, bool Current, bool S
     }
 }
 
+/*
 bool cFlatDisplayMenu::SetItemChannel(const cChannel *Channel, int Index, bool Current, bool Selectable, bool WithProvider) {
     cSchedulesLock schedulesLock;
     const cSchedules *schedules = cSchedules::Schedules(schedulesLock);
@@ -207,12 +208,6 @@ bool cFlatDisplayMenu::SetItemChannel(const cChannel *Channel, int Index, bool C
                 ProgressBarDrawInline(menuPixmap, (menuWidth/10*3) + marginItem*2, y, menuWidth/10 - marginItem, fontHeight,
                     progress, 100, Theme.Color(clrMenuItemChanProgressFg), Theme.Color(clrMenuItemChanProgressBarFg),
                     Theme.Color(clrMenuItemChanProgressBg));
-/*
-            int progressTop = menuTop + y + (fontHeight / 2) - ProgressBarHeight() / 2;
-            ProgressBarCreate((menuWidth / 10 * 3) + marginItem, progressTop, menuWidth / 10,
-                Theme.Color(clrChannelProgressFg), Theme.Color(clrChannelProgressBarFg), clrTransparent);
-            ProgressBarDraw(progress, 100);
-*/
             menuPixmap->DrawText(cPoint((menuWidth / 10 * 4) + marginItem*2, y), Event->Title(), ColorFg, ColorBg, font);
             
             return true;
@@ -246,6 +241,7 @@ bool cFlatDisplayMenu::SetItemChannel(const cChannel *Channel, int Index, bool C
 
     return true;
 }
+*/
 
 void cFlatDisplayMenu::SetEvent(const cEvent *Event) {
     if( !Event )

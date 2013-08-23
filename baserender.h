@@ -33,7 +33,7 @@ class cFlatBaseRender
         tColor progressBarColorFg, progressBarColorBarFg, progressBarColorBarCurFg, progressBarColorBg;
         tColor progressBarColorMark, progressBarColorMarkCurrent;
         
-        // Buttons rot, grün, gelb, blau
+        // Buttons rot, grÃ¼n, gelb, blau
         cPixmap *buttonsPixmap;
         int buttonsWidth, buttonsHeight;
 
@@ -44,7 +44,7 @@ class cFlatBaseRender
         // Mehrzeiliger Content mit Scrollbalken
         cPixmap *contentPixmap;
         int contentLeft, contentTop, contentHeight, contentWidth;
-        int contentDrawPortHeight; // gesamthöhe des Textes
+        int contentDrawPortHeight; // gesamthÃ¶he des Textes
         bool contentHasScrollbar;
         bool contentShown;
         tColor contentColorFg, contentColorBg;

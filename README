@@ -22,7 +22,7 @@ Requirements
 
 Description
 -----------
-skinflat ist ein einfacher und schlanker Skin für VDR.
+skinflat ist ein einfacher und schlanker Skin fÃ¼r VDR.
 
 Installation 
 ------------
@@ -30,18 +30,18 @@ Installation wie bei allen VDR Plugins.
     make
     make install
 
-Für die Kanallogos empfehle ich die Logos von 3PO Repo (https://github.com/3PO/Senderlogos).
-Diese können mit folgendem Befehl heruntergeladen werden:
+FÃ¼r die Kanallogos empfehle ich die Logos von 3PO Repo (https://github.com/3PO/Senderlogos).
+Diese kÃ¶nnen mit folgendem Befehl heruntergeladen werden:
     git clone https://github.com/3PO/Senderlogos.git logos
-Die Logos müssen im folgenden Ordner zur Verfügung gestellt werden:
+Die Logos mÃ¼ssen im folgenden Ordner zur VerfÃ¼gung gestellt werden:
     <vdrconfigdir>/plugins/skinflat/logos/
 
-Der Skin muss im Menü unter Einstellungen -> OSD ausgewählt werden.
+Der Skin muss im MenÃ¼ unter Einstellungen -> OSD ausgewÃ¤hlt werden.
 
 
 Themes and theme specific Icons
 -------------------------------
-Der Skin ist weitestgehend über Themes anpassbar.
-Für die einfache Erstellung eines Themes existiert im Quellcode-Verzeichnis folgendes script:
+Der Skin ist weitestgehend Ã¼ber Themes anpassbar.
+FÃ¼r die einfache Erstellung eines Themes existiert im Quellcode-Verzeichnis folgendes script:
     generate_theme.sh
 Damit kann einfach ein neues Theme erstellt werden.
