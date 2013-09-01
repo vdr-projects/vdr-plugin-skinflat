@@ -11,10 +11,10 @@ cFlatConfig::~cFlatConfig(void) {
 
 void cFlatConfig::Init(void) {
     if( !strcmp(logoPath, "") )
-        logoPath = cString::sprintf("%s/logos/", PLUGINPATH);
+        logoPath = cString::sprintf("%s/logos/", PLUGINRESOURCEPATH);
     dsyslog("skinflat: logopath: %s", *logoPath);
     if( !strcmp(iconPath, "") )
-        iconPath = cString::sprintf("%s/icons/", PLUGINPATH);
+        iconPath = cString::sprintf("%s/icons/", PLUGINRESOURCEPATH);
     dsyslog("skinflat: iconPath: %s", *iconPath);
 }
 

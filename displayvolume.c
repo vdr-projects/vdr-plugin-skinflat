@@ -7,7 +7,8 @@ cFlatDisplayVolume::cFlatDisplayVolume(void) {
 
     CreateFullOsd();
     TopBarCreate();
-    int width = osdWidth / 4 * 3;
+    
+    int width = osdWidth /4*3;
     int left = osdWidth - width;
     left /= 2;
     

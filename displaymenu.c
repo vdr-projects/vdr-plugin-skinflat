@@ -79,9 +79,9 @@ int cFlatDisplayMenu::MaxItems(void) {
 
 int cFlatDisplayMenu::ItemsHeight(void) {
     if( menuCategory == mcChannel )
-        return MaxItems() * itemChannelHeight;
+        return MaxItems() * itemChannelHeight -2;
 
-    return MaxItems() * itemHeight;
+    return MaxItems() * itemHeight -2;
 }
 
 void cFlatDisplayMenu::Clear(void) {
@@ -138,11 +138,13 @@ void cFlatDisplayMenu::SetItem(const char *Text, int Index, bool Current, bool S
         const char *s = GetTabbedText(Text, i);
         if (s) {
             int xt = Tab(i);
-            menuPixmap->DrawText(cPoint(xt, y), s, ColorFg, ColorBg, font, menuWidth);
+            menuPixmap->DrawText(cPoint(xt, y), s, ColorFg, ColorBg, font, menuWidth - xt);
         }
         if (!Tab(i + 1))
             break;
     }
+
+    SetEditableWidth(menuWidth - Tab(1));
 }
 
 /*

@@ -6,7 +6,8 @@
 #include <vdr/plugin.h>
 #include "flat.h"
 
-#define PLUGINPATH (cPlugin::ConfigDirectory(PLUGIN_NAME_I18N))
+#define PLUGINCONFIGPATH (cPlugin::ConfigDirectory(PLUGIN_NAME_I18N))
+#define PLUGINRESOURCEPATH (cPlugin::ResourceDirectory(PLUGIN_NAME_I18N))
 
 class cFlatConfig
 {

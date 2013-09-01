@@ -3,6 +3,8 @@ VDR Plugin 'skinflat' Revision History
 
 2013-XX-XX: Version 0.1.1
 - [add] show disk usage in topbar @ menu recordings & timer
+- [update] diplay message - position at bottom of screen
+- [update] Makefile, imageloader - use ResourceDirectory instead of ConfigDirectory
 
 2013-09-08: Version 0.1.0
 - [add] parameter to set channel logos path (-l --logo)
