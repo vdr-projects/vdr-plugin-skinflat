@@ -138,112 +138,60 @@ void cFlatDisplayMenu::SetItem(const char *Text, int Index, bool Current, bool S
         const char *s = GetTabbedText(Text, i);
         if (s) {
             int xt = Tab(i);
-            menuPixmap->DrawText(cPoint(xt, y), s, ColorFg, ColorBg, font, menuWidth - xt);
+            if( CheckProgressBar( s ) ) {
+                int colWidth = Tab(i+1) - Tab(i);
+
+                tColor ColorFg = Theme.Color(clrMenuItemProgressFg);
+                tColor ColorBarFg = Theme.Color(clrMenuItemProgressBarFg);
+                tColor ColorBg = Theme.Color(clrMenuItemProgressBg);
+                if( Current ) {
+                    ColorFg = Theme.Color(clrMenuItemCurProgressFg);
+                    ColorBarFg = Theme.Color(clrMenuItemCurProgressBarFg);
+                    ColorBg = Theme.Color(clrMenuItemCurProgressBg);
+                }
+                menuPixmap->DrawRectangle(cRect(xt - 10, y, 10, itemHeight-2), ColorBg);
+                DrawProgressBarFromText(y + (itemHeight-2)/2 - (itemHeight-2)/2, xt, colWidth, s, ColorFg, ColorBarFg, ColorBg);
+            } else {
+                menuPixmap->DrawText(cPoint(xt, y), s, ColorFg, ColorBg, font, menuWidth - xt);
+            }
         }
         if (!Tab(i + 1))
             break;
     }
-
     SetEditableWidth(menuWidth - Tab(1));
 }
 
-/*
-bool cFlatDisplayMenu::SetItemChannel(const cChannel *Channel, int Index, bool Current, bool Selectable, bool WithProvider) {
-    cSchedulesLock schedulesLock;
-    const cSchedules *schedules = cSchedules::Schedules(schedulesLock);
-
-    cString buffer;
-    int y = Index * itemChannelHeight;
-    
-    tColor ColorFg, ColorBg;
-    if (Current) {
-        ColorFg = Theme.Color(clrItemCurrentFont);
-        ColorBg = Theme.Color(clrItemCurrentBg);
-    }
-    else {
-        if( Selectable ) {
-            ColorFg = Theme.Color(clrItemSelableFont);
-            ColorBg = Theme.Color(clrItemSelableBg);
-        } else {
-            ColorFg = Theme.Color(clrItemFont);
-            ColorBg = Theme.Color(clrItemBg);
-        }
-    }
-    menuPixmap->DrawRectangle(cRect(0, y, menuWidth, itemChannelHeight - 2), ColorBg);
-    
-    // event from channel
-    const cSchedule *Schedule = schedules->GetSchedule( Channel->GetChannelID() );
-    if( Schedule ) {
-        const cEvent *Event = Schedule->GetPresentEvent();
-        if( Event ) {
-            // calculate progress bar
-            float progress = (int)roundf( (float)(time(NULL) - Event->StartTime()) / (float) (Event->Duration()) * 100.0);
-            if(progress < 0)
-                progress = 0.;
-            else if(progress > 100)
-                progress = 100;
-
-            if( WithProvider )
-                buffer = cString::sprintf("%d\t%s - %s", Channel->Number(), Channel->Provider(), Channel->Name());
-            else
-                buffer = cString::sprintf("%d\t%s", Channel->Number(), Channel->Name());
-
-            const char *s1 = GetTabbedText(buffer, 0);
-            if( s1 ) {
-                int xt = Tab(0);
-                menuPixmap->DrawText(cPoint(marginItem + xt, y), s1, ColorFg, ColorBg, font);
-            }
-            const char *s2 = GetTabbedText(buffer, 1);
-            if( s2 ) {
-                int xt = Tab(1);
-                int w = (menuWidth / 10 * 3) - marginItem;
-                menuPixmap->DrawText(cPoint(marginItem + xt, y), s2, ColorFg, ColorBg, font, w);
-            }
-            
-            menuPixmap->DrawRectangle(cRect( (menuWidth/10*3) + marginItem, y, marginItem, fontHeight), ColorBg);
-            
-            if( Current )
-                ProgressBarDrawInline(menuPixmap, (menuWidth/10*3) + marginItem*2, y, menuWidth/10 - marginItem, fontHeight,
-                    progress, 100, Theme.Color(clrMenuItemChanCurProgressFg), Theme.Color(clrMenuItemChanCurProgressBarFg),
-                    Theme.Color(clrMenuItemChanCurProgressBg));
-            else
-                ProgressBarDrawInline(menuPixmap, (menuWidth/10*3) + marginItem*2, y, menuWidth/10 - marginItem, fontHeight,
-                    progress, 100, Theme.Color(clrMenuItemChanProgressFg), Theme.Color(clrMenuItemChanProgressBarFg),
-                    Theme.Color(clrMenuItemChanProgressBg));
-            menuPixmap->DrawText(cPoint((menuWidth / 10 * 4) + marginItem*2, y), Event->Title(), ColorFg, ColorBg, font);
-            
-            return true;
-        }
-    }
-
-    // without schedule, do it like vdr
-    if (!Channel->GroupSep()) {
-        if( WithProvider )
-            buffer = cString::sprintf("%d\t%s - %s", Channel->Number(), Channel->Provider(), Channel->Name());
-        else
-            buffer = cString::sprintf("%d\t%s", Channel->Number(), Channel->Name());
-
-        const char *s1 = GetTabbedText(buffer, 0);
-        if( s1 ) {
-            int xt = Tab(0);
-            menuPixmap->DrawText(cPoint(marginItem + xt, y), s1, ColorFg, ColorBg, font);
-        }
-        const char *s2 = GetTabbedText(buffer, 1);
-        if( s2 ) {
-            int xt = Tab(1);
-            int w = (menuWidth / 10 * 3) - marginItem;
-
-            menuPixmap->DrawText(cPoint(marginItem + xt, y), s2, ColorFg, ColorBg, font, w);
-        }
-    }
-    else {
-        buffer = cString::sprintf("---%s ----------------------------------------------------------------", Channel->Name());
-        menuPixmap->DrawText(cPoint(marginItem, y), buffer, ColorFg, ColorBg, font);
-    }
-
-    return true;
+bool cFlatDisplayMenu::CheckProgressBar(const char *text) {
+    if (strlen(text) > 5 
+        && text[0] == '[' 
+        && ((text[1] == '|')||(text[1] == ' ')) 
+        && ((text[2] == '|')||(text[2] == ' ')) 
+        && text[strlen(text) - 1] == ']')
+        return true;
+    return false;
 }
-*/
+
+void cFlatDisplayMenu::DrawProgressBarFromText(int Top, int Left, int Width, const char *bar, tColor ColorFg, tColor ColorBarFg, tColor ColorBg) {
+    const char *p = bar + 1;
+    bool isProgressbar = true;
+    int total = 0;
+    int now = 0;
+    for (; *p != ']'; ++p) {
+        if (*p == ' ' || *p == '|') {
+            ++total;
+            if (*p == '|')
+                ++now;
+        } else {
+            isProgressbar = false;
+            break;
+        }
+    }
+    if (isProgressbar) {
+        double progress = (double)now/(double)total;
+        ProgressBarDrawInline(menuPixmap, Left, Top, Width, itemHeight-2, progress*total, total,
+            ColorFg, ColorBarFg, ColorBg);
+    }
+}
 
 void cFlatDisplayMenu::SetEvent(const cEvent *Event) {
     if( !Event )

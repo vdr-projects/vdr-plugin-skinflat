@@ -76,13 +76,12 @@ THEME_CLR(Theme, clrMenuTextBg,             0xB0101010);
 THEME_CLR(Theme, clrMenuTextFont,           0xFFEEEEEE);
 
 // Menu Items
-THEME_CLR(Theme, clrMenuItemChanProgressFg,      0xFF3090B0);
-THEME_CLR(Theme, clrMenuItemChanProgressBarFg,   0xFF3090B0);
-THEME_CLR(Theme, clrMenuItemChanProgressBg,      0xB0101010);
-
-THEME_CLR(Theme, clrMenuItemChanCurProgressFg,      0xFFEEEEEE);
-THEME_CLR(Theme, clrMenuItemChanCurProgressBarFg,   0xFFEEEEEE);
-THEME_CLR(Theme, clrMenuItemChanCurProgressBg,      0xB03090B0);
+THEME_CLR(Theme, clrMenuItemProgressFg,      0xFFEEEEEE);
+THEME_CLR(Theme, clrMenuItemProgressBarFg,   0xFFEEEEEE);
+THEME_CLR(Theme, clrMenuItemProgressBg,      0xB0101010);
+THEME_CLR(Theme, clrMenuItemCurProgressFg,      0xFFEEEEEE);
+THEME_CLR(Theme, clrMenuItemCurProgressBarFg,   0xFFEEEEEE);
+THEME_CLR(Theme, clrMenuItemCurProgressBg,      0xB03090B0);
 
 // Replay
 THEME_CLR(Theme, clrReplayBg,               0xB0101010);

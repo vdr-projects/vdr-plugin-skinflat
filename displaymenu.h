@@ -20,6 +20,8 @@ class cFlatDisplayMenu : public cFlatBaseRender,  public cSkinDisplayMenu {
 
         void DrawScrollbar(int Total, int Offset, int Shown, int Top, int Height, bool CanScrollUp, bool CanScrollDown);
         int ItemsHeight(void);
+        bool CheckProgressBar(const char *text);
+        void DrawProgressBarFromText(int Top, int Left, int Width, const char *bar, tColor ColorFg, tColor ColorBarFg, tColor ColorBg);
     public:
         cFlatDisplayMenu(void);
         virtual ~cFlatDisplayMenu();
