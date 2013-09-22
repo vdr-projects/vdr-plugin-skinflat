@@ -78,8 +78,10 @@ class cFlatBaseRender
         void MessageClear(void);
 
         void ProgressBarCreate(int Left, int Top, int Width, tColor ColorFg, tColor ColorBarFg, tColor ColorBg);
+        void ProgressBarMarksCreate(int Left, int Top, int Width, tColor ColorFg, tColor ColorBarFg, tColor ColorBg);
         void ProgressBarDraw(int Current, int Total);
         int ProgressBarHeight(void);
+        int ProgressBarMarksHeight(void);
         void ProgressBarDrawMarks(int Current, int Total, const cMarks *Marks, tColor Color, tColor ColorCurrent);
         void ProgressBarDrawInline(cPixmap *Pixmap, int Left, int Top, int Width, int Height, int Current, int Total, tColor ColorFg, tColor ColorBarFg, tColor ColorBg);        
         

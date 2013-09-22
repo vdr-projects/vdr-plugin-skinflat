@@ -8,8 +8,9 @@ cFlatDisplayMenu::cFlatDisplayMenu(void) {
 
     VideoDiskUsageState = -1;
 
-    itemHeight = fontHeight + 2;
-    itemChannelHeight = fontHeight + 2;
+    itemPadding = 5;
+    itemHeight = fontHeight + itemPadding;
+    itemChannelHeight = fontHeight + itemPadding;
     
     scrollBarWidth = 20;
     scrollBarHeight = osdHeight - (topBarHeight + buttonsHeight + marginItem*3 );
@@ -57,7 +58,7 @@ void cFlatDisplayMenu::SetScrollbar(int Total, int Offset) {
 }
 
 void cFlatDisplayMenu::Scroll(bool Up, bool Page) {
-    // Wird das MenÃ¼ gescrollt oder Content?
+    // Wird das Menü gescrollt oder Content?
     if( ContentIsShown() )
     {
         bool scrolled = ContentScroll(Up, Page);
@@ -79,9 +80,9 @@ int cFlatDisplayMenu::MaxItems(void) {
 
 int cFlatDisplayMenu::ItemsHeight(void) {
     if( menuCategory == mcChannel )
-        return MaxItems() * itemChannelHeight -2;
+        return MaxItems() * itemChannelHeight -itemPadding;
 
-    return MaxItems() * itemHeight -2;
+    return MaxItems() * itemHeight -itemPadding;
 }
 
 void cFlatDisplayMenu::Clear(void) {
@@ -149,8 +150,8 @@ void cFlatDisplayMenu::SetItem(const char *Text, int Index, bool Current, bool S
                     ColorBarFg = Theme.Color(clrMenuItemCurProgressBarFg);
                     ColorBg = Theme.Color(clrMenuItemCurProgressBg);
                 }
-                menuPixmap->DrawRectangle(cRect(xt - 10, y, 10, itemHeight-2), ColorBg);
-                DrawProgressBarFromText(y + (itemHeight-2)/2 - (itemHeight-2)/2, xt, colWidth, s, ColorFg, ColorBarFg, ColorBg);
+                menuPixmap->DrawRectangle(cRect(xt - 10, y, 10, itemHeight-itemPadding), ColorBg);
+                DrawProgressBarFromText(y + (itemHeight-itemPadding)/2 - (itemHeight-itemPadding)/2, xt, colWidth, s, ColorFg, ColorBarFg, ColorBg);
             } else {
                 menuPixmap->DrawText(cPoint(xt, y), s, ColorFg, ColorBg, font, menuWidth - xt);
             }
@@ -188,7 +189,7 @@ void cFlatDisplayMenu::DrawProgressBarFromText(int Top, int Left, int Width, con
     }
     if (isProgressbar) {
         double progress = (double)now/(double)total;
-        ProgressBarDrawInline(menuPixmap, Left, Top, Width, itemHeight-2, progress*total, total,
+        ProgressBarDrawInline(menuPixmap, Left, Top, Width, itemHeight-itemPadding, progress*total, total,
             ColorFg, ColorBarFg, ColorBg);
     }
 }

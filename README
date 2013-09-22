@@ -1,7 +1,7 @@
 This is a "plugin" for the Video Disk Recorder (VDR).
 
 Written by:                  Martin Schirrmacher <vdr.skinflat@schirrmacher.eu>
-Based on:                    skin-nOpacity from Louis Braun
+Thanks to:                    skin-nOpacity from Louis Braun
                              http://projects.vdr-developer.org/projects/skin-nopacity/
 
 Project's homepage:          http://projects.vdr-developer.org/projects/plg-skinflat/
@@ -22,7 +22,8 @@ Requirements
 
 Description
 -----------
-skinflat ist ein einfacher und schlanker Skin fÃ¼r VDR.
+skinflat ist ein einfacher und schlanker Skin für VDR.
+Der Skin ist schnell und komplett ohne Konfiguration.
 
 Installation 
 ------------
@@ -30,8 +31,8 @@ Installation wie bei allen VDR Plugins.
     make
     make install
 
-FÃ¼r die Kanallogos empfehle ich die Logos von 3PO Repo (https://github.com/3PO/Senderlogos).
-Diese kÃ¶nnen mit folgendem Befehl heruntergeladen werden:
+Für die Kanallogos empfehle ich die Logos von 3PO Repo (https://github.com/3PO/Senderlogos).
+Diese können mit folgendem Befehl heruntergeladen werden:
     git clone https://github.com/3PO/Senderlogos.git logos
 Die Logos mÃ¼ssen im folgenden Ordner zur VerfÃ¼gung gestellt werden:
     <vdrconfigdir>/plugins/skinflat/logos/

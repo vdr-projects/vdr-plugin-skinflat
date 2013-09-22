@@ -12,7 +12,7 @@ cFlatDisplayReplay::cFlatDisplayReplay(bool ModeOnly) {
     labelPixmap = osd->CreatePixmap(1, cRect(0, osdHeight - labelHeight, osdWidth, labelHeight));
     iconsPixmap = osd->CreatePixmap(2, cRect(0, osdHeight - labelHeight, osdWidth, labelHeight));
     
-    ProgressBarCreate(0, osdHeight - labelHeight - ProgressBarHeight(), osdWidth,
+    ProgressBarMarksCreate(0, osdHeight - labelHeight - ProgressBarMarksHeight(), osdWidth,
         Theme.Color(clrReplayProgressFg), Theme.Color(clrReplayProgressBarFg), Theme.Color(clrReplayProgressBg));
 
     labelJump = osd->CreatePixmap(1, cRect(0, osdHeight - labelHeight - ProgressBarHeight() - marginItem - fontHeight, osdWidth, fontHeight));

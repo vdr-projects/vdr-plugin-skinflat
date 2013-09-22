@@ -14,7 +14,7 @@
 
 #include "flat.h"
 
-static const char *VERSION        = "0.1.0";
+static const char *VERSION        = "0.1.1";
 static const char *DESCRIPTION    = "skin flat";
 
 class cPluginFlat : public cPlugin {
